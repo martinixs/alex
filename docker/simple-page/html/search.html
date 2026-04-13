@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Поиск</title>
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f0f0f0;
+    }
+
+    .container {
+        background-color: white;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        width: 400px;
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .search-box {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    input {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 14px;
+    }
+
+    button {
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    button:hover {
+        background-color: #45a049;
+    }
+
+    /* Лоадер */
+    #loader {
+        display: none;
+        text-align: center;
+        margin: 10px 0;
+        color: #888;
+    }
+
+    .spinner {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #4CAF50;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 10px;
+    }
+
+    @keyframes spin {
+        0%  { transform: rotate(0deg); }
+        100%{ transform: rotate(360deg); }
+    }
+
+    /* Результаты */
+    #results {
+        display: none;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    #results li {
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        margin-bottom: 8px;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+
+    #results li:hover {
+        background-color: #f0f0f0;
+    }
+
+    #results li.selected {
+        background-color: #4CAF50;
+        color: white;
+        border-color: #4CAF50;
+    }
+
+    /* Выбранный результат */
+    #selected-result {
+        display: none;
+        margin-top: 20px;
+        padding: 12px;
+        background-color: #e8f5e9;
+        border-radius: 4px;
+        text-align: center;
+        color: #2e7d32;
+        font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Поиск</h2>
+
+  <div class="search-box">
+    <input
+            type="text"
+            id="search-input"
+            placeholder="Введите запрос..."
+    />
+    <button id="search-btn" onclick="search()">Найти</button>
+  </div>
+
+  <!-- Лоадер -->
+  <div id="loader">
+    <div class="spinner"></div>
+    <span>Загрузка...</span>
+  </div>
+
+  <!-- Список результатов -->
+  <ul id="results"></ul>
+
+  <!-- Выбранный элемент -->
+  <div id="selected-result"></div>
+</div>
+
+<script>
+  // Моковые данные
+  const mockData = {
+      "java":   ["Java Core", "Java Spring", "Java Hibernate", "Java Maven"],
+      "python": ["Python Django", "Python Flask", "Python FastAPI", "Python NumPy"],
+      "javascript": ["JavaScript React", "JavaScript Vue", "JavaScript Node", "JavaScript Angular"],
+  };
+
+  function search() {
+      const query   = document.getElementById('search-input').value.toLowerCase().trim();
+      const loader  = document.getElementById('loader');
+      const results = document.getElementById('results');
+      const selected = document.getElementById('selected-result');
+
+      // Сбросить предыдущие результаты
+      results.innerHTML  = '';
+      results.style.display  = 'none';
+      selected.style.display = 'none';
+      selected.textContent   = '';
+
+      if (!query) return;
+
+      // Показать лоадер
+      loader.style.display = 'block';
+
+      // Имитация загрузки 1.5 секунды
+      setTimeout(() => {
+          loader.style.display = 'none';
+
+          // Найти результаты
+          const data = mockData[query] ||
+              Object.values(mockData)
+                    .flat()
+                    .filter(item => item.toLowerCase().includes(query));
+
+          if (data.length === 0) {
+              results.innerHTML = '<li>Ничего не найдено</li>';
+          } else {
+              data.forEach((item, index) => {
+                  const li = document.createElement('li');
+                  li.textContent       = item;
+                  li.id                = `result-${index}`;
+                  li.setAttribute('data-value', item);
+                  li.onclick = () => selectItem(li, item);
+                  results.appendChild(li);
+              });
+          }
+
+          results.style.display = 'block';
+      }, 1500);
+  }
+
+  function selectItem(element, value) {
+      // Убрать выделение со всех
+      document.querySelectorAll('#results li').forEach(li => {
+          li.classList.remove('selected');
+      });
+
+      // Выделить выбранный
+      element.classList.add('selected');
+
+      // Показать выбранный результат
+      const selected = document.getElementById('selected-result');
+      selected.style.display  = 'block';
+      selected.textContent    = 'Выбрано: ' + value;
+      selected.id             = 'selected-result';
+  }
+
+  // Поиск по Enter
+  document.getElementById('search-input')
+          .addEventListener('keypress', function(e) {
+              if (e.key === 'Enter') search();
+          });
+</script>
+
+</body>
+</html>
