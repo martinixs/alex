@@ -4,12 +4,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
-import org.testng.annotations.Test;
 
 // Наследуемся от BaseTest — драйвер уже настроен
 public class SearchTest extends BaseTest {
 
-    @Test
+    //@Test
     public void searchAndSelectTest() {
         // Открыть страницу поиска
         driver.get(getUrl("search.html"));

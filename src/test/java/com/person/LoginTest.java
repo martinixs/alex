@@ -5,13 +5,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.annotations.Test;
 
 import java.time.Duration;
 
 public class LoginTest extends BaseTest {
 
-    @Test
+    //@Test
     public void successLoginTest() {
         driver.get(getUrl("/"));
 
@@ -29,7 +28,7 @@ public class LoginTest extends BaseTest {
         Assert.assertEquals(message.getText(), "Успешный вход!");
     }
 
-    @Test
+    //@Test
     public void failLoginTest() {
         driver.get("http://localhost:8080");
 

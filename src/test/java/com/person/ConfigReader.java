@@ -6,7 +6,7 @@ import java.util.Properties;
 
 public class ConfigReader {
 
-    private static Properties properties = new Properties();
+    private static final Properties properties = new Properties();
 
     // Загружаем properties при старте
     static {

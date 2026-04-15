@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Портал бизнес-пользователей</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            min-height: 100vh;
+        }
+
+        /* ════════════════════════════
+           ШАПКА
+        ════════════════════════════ */
+        header {
+            background-color: #0f1117;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 32px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.4);
+            position: sticky;
+            top: 0;
+            z-index: 200;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .logo-text {
+            font-size: 16px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        nav a {
+            color: #a0aec0;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 8px 14px;
+            border-radius: 8px;
+            transition: color 0.2s, background 0.2s;
+            white-space: nowrap;
+        }
+
+        nav a:hover {
+            color: #ffffff;
+            background: rgba(255,255,255,0.08);
+        }
+
+        nav a.active {
+            color: #ffffff;
+            background: rgba(102,126,234,0.2);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .bell-btn {
+            position: relative;
+            background: rgba(255,255,255,0.06);
+            border: none;
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background 0.2s;
+        }
+
+        .bell-btn:hover {
+            background: rgba(255,255,255,0.12);
+        }
+
+        .bell-badge {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            width: 8px;
+            height: 8px;
+            background: #f56565;
+            border-radius: 50%;
+            border: 2px solid #0f1117;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            padding: 6px 10px;
+            border-radius: 10px;
+            transition: background 0.2s;
+        }
+
+        .user-info:hover {
+            background: rgba(255,255,255,0.08);
+        }
+
+        .user-avatar {
+            width: 34px;
+            height: 34px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .user-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: #e2e8f0;
+        }
+
+        /* ════════════════════════════
+           HERO БЛОК
+        ════════════════════════════ */
+        .hero-block {
+            background: linear-gradient(135deg, #1a1d2e 0%, #2d1b69 50%, #11153a 100%);
+            padding: 56px 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-block::before {
+            content: '';
+            position: absolute;
+            top: -60px;
+            right: -60px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(102,126,234,0.2) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero-block::after {
+            content: '';
+            position: absolute;
+            bottom: -40px;
+            left: 30%;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(118,75,162,0.15) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero-title {
+            font-size: 38px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-subtitle {
+            font-size: 16px;
+            color: #a0aec0;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ════════════════════════════
+           ОСНОВНОЙ КОНТЕНТ
+        ════════════════════════════ */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 32px 60px;
+        }
+
+        /* ════════════════════════════
+           ВКЛАДКИ
+        ════════════════════════════ */
+        .tabs-wrapper {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+
+        .tabs-header {
+            display: flex;
+            border-bottom: 1px solid #e2e8f0;
+            background: #f7f8fa;
+            padding: 0 8px;
+            gap: 4px;
+        }
+
+        .tab-btn {
+            padding: 16px 24px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #718096;
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.2s;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -1px;
+            white-space: nowrap;
+        }
+
+        .tab-btn:hover {
+            color: #2d3748;
+        }
+
+        .tab-btn.active {
+            color: #667eea;
+            background: white;
+            border-bottom-color: #667eea;
+            font-weight: 600;
+        }
+
+        /* ════════════════════════════
+           СОДЕРЖИМОЕ ВКЛАДКИ
+        ════════════════════════════ */
+        .tab-content {
+            display: none;
+            padding: 28px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Поиск */
+        .search-bar {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            background: #f7f8fa;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 0 18px;
+            margin-bottom: 28px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .search-bar:focus-within {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102,126,234,0.12);
+            background: white;
+        }
+
+        .search-icon {
+            font-size: 16px;
+            color: #a0aec0;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+
+        .search-bar input {
+            flex: 1;
+            border: none;
+            background: none;
+            padding: 13px 0;
+            font-size: 14px;
+            color: #2d3748;
+            outline: none;
+        }
+
+        .search-bar input::placeholder {
+            color: #a0aec0;
+        }
+
+        /* ════════════════════════════
+           КАРТОЧКИ
+        ════════════════════════════ */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .app-card {
+            background: #f7f8fa;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 160px;
+            cursor: pointer;
+            position: relative;
+            transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s, background 0.2s;
+        }
+
+        .app-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+            border-color: #667eea;
+            background: white;
+        }
+
+        /* Иконка ссылки */
+        .card-link-icon {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            width: 26px;
+            height: 26px;
+            background: rgba(102,126,234,0.1);
+            border-radius: 7px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            color: #667eea;
+            font-style: normal;
+            transition: background 0.2s, opacity 0.2s;
+            opacity: 0.5;
+        }
+
+        .app-card:hover .card-link-icon {
+            opacity: 1;
+            background: rgba(102,126,234,0.15);
+        }
+
+        /* Верхняя надпись */
+        .card-top-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: #a0aec0;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            padding-right: 36px;
+        }
+
+        /* Центр карточки */
+        .card-center {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 6px;
+            flex: 1;
+            justify-content: center;
+            padding: 12px 0 8px;
+        }
+
+        .card-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #1a202c;
+            line-height: 1.3;
+        }
+
+        .card-desc-short {
+            font-size: 12px;
+            color: #718096;
+            line-height: 1.4;
+        }
+
+        /* Нижняя надпись */
+        .card-bottom-label {
+            font-size: 11px;
+            color: #cbd5e0;
+            font-weight: 500;
+        }
+
+        /* Цветные полоски сверху карточки */
+        .app-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            border-radius: 16px 16px 0 0;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .app-card:hover::before {
+            opacity: 1;
+        }
+
+        .card-blue::before   { background: linear-gradient(90deg, #667eea, #764ba2); }
+        .card-green::before  { background: linear-gradient(90deg, #48bb78, #38a169); }
+        .card-orange::before { background: linear-gradient(90deg, #ed8936, #dd6b20); }
+        .card-red::before    { background: linear-gradient(90deg, #f56565, #e53e3e); }
+        .card-teal::before   { background: linear-gradient(90deg, #38b2ac, #2c7a7b); }
+        .card-pink::before   { background: linear-gradient(90deg, #ed64a6, #d53f8c); }
+
+        /* ════════════════════════════
+           БОКОВАЯ ПАНЕЛЬ
+        ════════════════════════════ */
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.35);
+            z-index: 300;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .overlay.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .side-panel {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 33.333%;
+            min-width: 360px;
+            height: 100vh;
+            background: white;
+            z-index: 400;
+            box-shadow: -8px 0 32px rgba(0,0,0,0.15);
+            display: flex;
+            flex-direction: column;
+            transform: translateX(100%);
+            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .side-panel.open {
+            transform: translateX(0);
+        }
+
+        /* Шапка панели */
+        .panel-header {
+            padding: 24px 28px 20px;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 16px;
+            flex-shrink: 0;
+        }
+
+        .panel-header-info {
+            flex: 1;
+        }
+
+        .panel-category {
+            font-size: 11px;
+            font-weight: 600;
+            color: #a0aec0;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 6px;
+        }
+
+        .panel-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1a202c;
+            line-height: 1.3;
+        }
+
+        .panel-close {
+            background: #f7f8fa;
+            border: none;
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            color: #718096;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: background 0.2s, color 0.2s;
+            margin-top: 2px;
+        }
+
+        .panel-close:hover {
+            background: #fee2e2;
+            color: #e53e3e;
+        }
+
+        /* Цветная полоска в шапке панели */
+        .panel-accent-bar {
+            height: 4px;
+            width: 100%;
+            flex-shrink: 0;
+        }
+
+        /* Тело панели */
+        .panel-body {
+            flex: 1;
+            padding: 28px;
+            overflow-y: auto;
+        }
+
+        .panel-section-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: #a0aec0;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 10px;
+        }
+
+        .panel-description {
+            font-size: 14px;
+            color: #4a5568;
+            line-height: 1.8;
+            margin-bottom: 28px;
+        }
+
+        .panel-meta {
+            background: #f7f8fa;
+            border-radius: 12px;
+            padding: 16px 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .meta-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .meta-key {
+            font-size: 12px;
+            color: #a0aec0;
+            font-weight: 500;
+        }
+
+        .meta-val {
+            font-size: 12px;
+            color: #2d3748;
+            font-weight: 600;
+        }
+
+        .meta-badge {
+            background: #c6f6d5;
+            color: #276749;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 20px;
+        }
+
+        /* Подвал панели */
+        .panel-footer {
+            padding: 20px 28px;
+            border-top: 1px solid #e2e8f0;
+            flex-shrink: 0;
+        }
+
+        .btn-open-app {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 13px 24px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: opacity 0.2s, transform 0.15s;
+        }
+
+        .btn-open-app:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .btn-open-app:active {
+            transform: translateY(0);
+        }
+
+        /* ════════════════════════════
+           АДАПТИВ
+        ════════════════════════════ */
+        @media (max-width: 1024px) {
+            .cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .side-panel {
+                width: 50%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header { padding: 0 16px; }
+            nav { display: none; }
+
+            .hero-block {
+                padding: 36px 24px;
+            }
+
+            .hero-title { font-size: 28px; }
+
+            main { padding: 24px 16px; }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tab-content { padding: 20px 16px; }
+
+            .side-panel {
+                width: 100%;
+                min-width: unset;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════
+     ШАПКА
+══════════════════════════════ -->
+<header>
+    <div class="header-left">
+        <a href="#" class="header-logo">
+
+            <span class="logo-text">BizPortal</span>
+        </a>
+        <nav>
+            <a href="#" class="active">Приложения</a>
+            <a href="#">О портале</a>
+            <a href="#">Генератор QR</a>
+        </nav>
+    </div>
+
+    <div class="header-right">
+        <button class="bell-btn" title="Уведомления">
+            🔔
+            <span class="bell-badge"></span>
+        </button>
+        <div class="user-info">
+            <div class="user-avatar">ИВ</div>
+            <span class="user-name">Иванов И.И.</span>
+        </div>
+    </div>
+</header>
+
+<!-- ══════════════════════════════
+     HERO БЛОК
+══════════════════════════════ -->
+<div class="hero-block">
+    <div class="hero-title" align="center">Приложения</div>
+    <div class="hero-subtitle"align="center">Выберите приложение, которым хотите воспользоваться</div>
+</div>
+
+<!-- ══════════════════════════════
+     ОСНОВНОЙ КОНТЕНТ
+══════════════════════════════ -->
+<main>
+    <div class="tabs-wrapper">
+
+        <!-- Заголовки вкладок -->
+        <div class="tabs-header">
+            <button class="tab-btn active" onclick="switchTab('available', this)">
+                Доступные
+            </button>
+            <button class="tab-btn" onclick="switchTab('catalog', this)">
+                Каталог
+            </button>
+        </div>
+
+        <!-- ── Вкладка: Доступные ── -->
+        <div class="tab-content active" id="tab-available">
+            <div class="search-bar">
+                <span class="search-icon">🔍</span>
+                <input type="text" placeholder="Поиск доступных приложений..." />
+            </div>
+
+            <div class="cards-grid">
+
+                <div class="app-card card-blue" onclick="openPanel({
+                        title: 'CRM Система',
+                        category: 'Продажи',
+                        desc: 'Комплексная система управления взаимоотношениями с клиентами. Позволяет вести базу клиентов, отслеживать сделки, управлять воронкой продаж и формировать отчёты по эффективности работы отдела продаж.',
+                        status: 'Активно',
+                        version: 'v3.4.1',
+                        owner: 'Отдел продаж',
+                        color: 'linear-gradient(90deg, #667eea, #764ba2)'
+                    })">
+                    <div class="card-link-icon">↗</div>
+                    <div class="card-top-label">Продажи</div>
+                    <div class="card-center">
+                        <div class="card-title">CRM Система</div>
+                        <div class="card-desc-short">Управление клиентами и сделками</div>
+                    </div>
+                    <div class="card-bottom-label">Последнее обновление: сегодня</div>
+                </div>
+
+                <div class="app-card card-green" onclick="openPanel({
+                        title: 'Документооборот',
+                        category: 'Документы',
+                        desc: 'Система электронного документооборота для управления внутренними и внешними документами компании. Поддерживает согласование, подписание и архивирование документов в соответствии с регламентами.',
+                        status: 'Активно',
+                        version: 'v2.1.0',
+                        owner: 'Юридический отдел',
+                        color: 'linear-gradient(90deg, #48bb78, #38a169)'
+                    })">
+                    <div class="card-link-icon">↗</div>
+                    <div class="card-top-label">Документы</div>
+                    <div class="card-center">
+                        <div class="card-title">Документооборот</div>
+                        <div class="card-desc-short">Электронные документы и согласования</div>
+                    </div>
+                    <div class="card-bottom-label">Последнее обновление: вчера</div>
+                </div>
+
+                <div class="app-card card-orange" onclick="openPanel({
+                        title: 'Аналитика',
+                        category: 'Отчёты',
+                        desc: 'Платформа бизнес-аналитики с интерактивными дашбордами и отчётами в реальном времени. Объединяет данные из всех систем компании и предоставляет наглядную визуализацию ключевых показателей.',
+                        status: 'Активно',
+                        version: 'v5.0.2',
+                        owner: 'Аналитический отдел',
+                        color: 'linear-gradient(90deg, #ed8936, #dd6b20)'
+                    })">
+                    <div class="card-link-icon">↗</div>
+                    <div class="card-top-label">Отчёты</div>
+                    <div class="card-center">
+                        <div class="card-title">Аналитика</div>
+                        <div class="card-desc-short">Дашборды и отчёты в реальном времени</div>
+                    </div>
+                    <div class="card-bottom-label">Последнее обновление: 3 дня назад</div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ── Вкладка: Каталог ── -->
+        <div class="tab-content" id="tab-catalog">
+            <div class="search-bar">
+                <span class="search-icon">🔍</span>
+                <input type="text" placeholder="Поиск в каталоге приложений..." />
+            </div>
+
+            <div class="cards-grid">
+
+                <div class="app-card card-pink" onclick="openPanel({
+                        title: 'HR Платформа',
+                        category: 'Персонал',
+                        desc: 'Система управления персоналом для ведения кадрового учёта, расчёта заработной платы, управления отпусками и оценки сотрудников. Интегрирована с бухгалтерской системой.',
+                        status: 'Активно',
+                        version: 'v1.8.5',
+                        owner: 'HR отдел',
+                        color: 'linear-gradient(90deg, #ed64a6, #d53f8c)'
+                    })">
+                    <div class="card-link-icon">↗</div>
+                    <div class="card-top-label">Персонал</div>
+                    <div class="card-center">
+                        <div class="card-title">HR Платформа</div>
+                        <div class="card-desc-short">Кадровый учёт и управление персоналом</div>
+                    </div>
+                    <div class="card-bottom-label">Последнее обновление: неделю назад</div>
+                </div>
+
+                <div class="app-card card-teal" onclick="openPanel({
+                        title: 'Финансы',
+                        category: 'Бухгалтерия',
+                        desc: 'Финансовая платформа для ведения бухгалтерского учёта, планирования бюджета, управления платежами и формирования финансовой отчётности согласно требованиям законодательства.',
+                        status: 'Активно',
+                        version: 'v4.2.0',
+                        owner: 'Финансовый отдел',
+                        color: 'linear-gradient(90deg, #38b2ac, #2c7a7b)'
+                    })">
+                    <div class="card-link-icon">↗</div>
+                    <div class="card-top-label">Бухгалтерия</div>
+                    <div class="card-center">
+                        <div class="card-title">Финансы</div>
+                        <div class="card-desc-short">Учёт, бюджетирование и отчётность</div>
+                    </div>
+                    <div class="card-bottom-label">Последнее обновление: 2 дня назад</div>
+                </div>
+
+                <div class="app-card card-red" onclick="openPanel({
+                        title: 'Поддержка',
+                        category: 'Сервис',
+                        desc: 'Helpdesk система для обработки обращений сотрудников и клиентов. Поддерживает создание тикетов, маршрутизацию по отделам, SLA-контроль и базу знаний для самостоятельного решения вопросов.',
+                        status: 'Активно',
+                        version: 'v2.9.1',
+                        owner: 'IT отдел',
+                        color: 'linear-gradient(90deg, #f56565, #e53e3e)'
+                    })">
+                    <div class="card-link-icon">↗</div>
+                    <div class="card-top-label">Сервис</div>
+                    <div class="card-center">
+                        <div class="card-title">Поддержка</div>
+                        <div class="card-desc-short">Helpdesk и обработка обращений</div>
+                    </div>
+                    <div class="card-bottom-label">Последнее обновление: сегодня</div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<!-- ══════════════════════════════
+     ОВЕРЛЕЙ + БОКОВАЯ ПАНЕЛЬ
+══════════════════════════════ -->
+<div class="overlay" id="overlay" onclick="closePanel()"></div>
+
+<div class="side-panel" id="sidePanel">
+    <!-- Цветная полоска -->
+    <div class="panel-accent-bar" id="panelAccentBar"></div>
+
+    <!-- Шапка -->
+    <div class="panel-header">
+        <div class="panel-header-info">
+            <div class="panel-category" id="panelCategory"></div>
+            <div class="panel-title" id="panelTitle"></div>
+        </div>
+        <button class="panel-close" onclick="closePanel()">✕</button>
+    </div>
+
+    <!-- Тело -->
+    <div class="panel-body">
+        <div class="panel-section-label">Описание</div>
+        <div class="panel-description" id="panelDesc"></div>
+
+        <div class="panel-section-label">Информация</div>
+        <div class="panel-meta">
+            <div class="meta-row">
+                <span                    class="meta-key">Статус</span>
+                <span class="meta-badge" id="panelStatus"></span>
+            </div>
+            <div class="meta-row">
+                <span class="meta-key">Версия</span>
+                <span class="meta-val" id="panelVersion"></span>
+            </div>
+            <div class="meta-row">
+                <span class="meta-key">Владелец</span>
+                <span class="meta-val" id="panelOwner"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Подвал панели -->
+    <div class="panel-footer">
+        <button class="btn-open-app" onclick="launchApp()">
+            Открыть приложение
+        </button>
+    </div>
+</div>
+
+<script>
+    // ── Переключение вкладок ──
+    function switchTab(tabName, btn) {
+        document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById('tab-' + tabName).classList.add('active');
+        btn.classList.add('active');
+    }
+
+    // ── Текущее приложение ──
+    let currentApp = null;
+
+    // ── Открыть боковую панель ──
+    function openPanel(app) {
+        currentApp = app;
+
+        document.getElementById('panelTitle').textContent    = app.title;
+        document.getElementById('panelCategory').textContent = app.category;
+        document.getElementById('panelDesc').textContent     = app.desc;
+        document.getElementById('panelStatus').textContent   = app.status;
+        document.getElementById('panelVersion').textContent  = app.version;
+        document.getElementById('panelOwner').textContent    = app.owner;
+        document.getElementById('panelAccentBar').style.background = app.color;
+
+        document.getElementById('overlay').classList.add('open');
+        document.getElementById('sidePanel').classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+
+    // ── Закрыть боковую панель ──
+    function closePanel() {
+        document.getElementById('overlay').classList.remove('open');
+        document.getElementById('sidePanel').classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    // ── Закрытие по Escape ──
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closePanel();
+    });
+
+    // ── Открыть приложение ──
+    function launchApp() {
+        if (currentApp) {
+            window.location.href = "http://localhost:8080/search.html";
+        }
+    }
+</script>
+
+</body>
+</html>

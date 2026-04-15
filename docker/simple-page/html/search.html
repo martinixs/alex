@@ -2,222 +2,853 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Поиск</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Поиск лиц — Портал бизнес-пользователей</title>
   <style>
-    body {
-        font-family: Arial, sans-serif;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
+    * {
         margin: 0;
-        background-color: #f0f0f0;
-    }
-
-    .container {
-        background-color: white;
-        padding: 30px;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        width: 400px;
-    }
-
-    h2 {
-        text-align: center;
-        margin-bottom: 20px;
-    }
-
-    .search-box {
-        display: flex;
-        gap: 10px;
-        margin-bottom: 20px;
-    }
-
-    input {
-        flex: 1;
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        font-size: 14px;
-    }
-
-    button {
-        padding: 10px 20px;
-        background-color: #4CAF50;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 14px;
-    }
-
-    button:hover {
-        background-color: #45a049;
-    }
-
-    /* Лоадер */
-    #loader {
-        display: none;
-        text-align: center;
-        margin: 10px 0;
-        color: #888;
-    }
-
-    .spinner {
-        border: 4px solid #f3f3f3;
-        border-top: 4px solid #4CAF50;
-        border-radius: 50%;
-        width: 30px;
-        height: 30px;
-        animation: spin 1s linear infinite;
-        margin: 0 auto 10px;
-    }
-
-    @keyframes spin {
-        0%  { transform: rotate(0deg); }
-        100%{ transform: rotate(360deg); }
-    }
-
-    /* Результаты */
-    #results {
-        display: none;
-        list-style: none;
         padding: 0;
-        margin: 0;
+        box-sizing: border-box;
     }
 
-    #results li {
-        padding: 12px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        margin-bottom: 8px;
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f0f2f5;
+        min-height: 100vh;
+    }
+
+    /* ════════════════════════════
+       ШАПКА
+    ════════════════════════════ */
+    header {
+        background-color: #0f1117;
+        height: 64px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 32px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.4);
+        position: sticky;
+        top: 0;
+        z-index: 200;
+    }
+
+    .header-left {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+    }
+
+    .header-logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+    }
+
+    .logo-icon {
+        width: 36px;
+        height: 36px;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+    }
+
+    .logo-text {
+        font-size: 16px;
+        font-weight: 700;
+        color: #ffffff;
+    }
+
+    nav {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    nav a {
+        color: #a0aec0;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 500;
+        padding: 8px 14px;
+        border-radius: 8px;
+        transition: color 0.2s, background 0.2s;
+        white-space: nowrap;
+    }
+
+    nav a:hover {
+        color: #ffffff;
+        background: rgba(255,255,255,0.08);
+    }
+
+    nav a.active {
+        color: #ffffff;
+        background: rgba(102,126,234,0.2);
+    }
+
+    .header-right {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .bell-btn {
+        position: relative;
+        background: rgba(255,255,255,0.06);
+        border: none;
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         cursor: pointer;
+        font-size: 18px;
         transition: background 0.2s;
     }
 
-    #results li:hover {
-        background-color: #f0f0f0;
+    .bell-btn:hover {
+        background: rgba(255,255,255,0.12);
     }
 
-    #results li.selected {
-        background-color: #4CAF50;
+    .bell-badge {
+        position: absolute;
+        top: 6px;
+        right: 6px;
+        width: 8px;
+        height: 8px;
+        background: #f56565;
+        border-radius: 50%;
+        border: 2px solid #0f1117;
+    }
+
+    .user-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+        padding: 6px 10px;
+        border-radius: 10px;
+        transition: background 0.2s;
+    }
+
+    .user-info:hover {
+        background: rgba(255,255,255,0.08);
+    }
+
+    .user-avatar {
+        width: 34px;
+        height: 34px;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+        font-weight: 600;
         color: white;
-        border-color: #4CAF50;
     }
 
-    /* Выбранный результат */
-    #selected-result {
+    .user-name {
+        font-size: 14px;
+        font-weight: 500;
+        color: #e2e8f0;
+    }
+
+    /* ════════════════════════════
+       ОСНОВНОЙ КОНТЕНТ
+    ════════════════════════════ */
+    main {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 36px 32px 60px;
+    }
+
+    /* ════════════════════════════
+       ВЕРХНИЙ БЛОК — ЗАГОЛОВОК
+    ════════════════════════════ */
+    .page-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 28px;
+        gap: 24px;
+        flex-wrap: wrap;
+    }
+
+    .page-header-left {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .page-title {
+        font-size: 26px;
+        font-weight: 700;
+        color: #1a202c;
+    }
+
+    .page-subtitle {
+        font-size: 14px;
+        color: #718096;
+    }
+
+    .page-header-right {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .btn-primary {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 11px 20px;
+        border: none;
+        border-radius: 10px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: opacity 0.2s, transform 0.15s;
+        white-space: nowrap;
+    }
+
+    .btn-primary:hover {
+        opacity: 0.9;
+        transform: translateY(-1px);
+    }
+
+    .btn-primary:active {
+        transform: translateY(0);
+    }
+
+    .btn-ul {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+    }
+
+    .btn-fl {
+        background: linear-gradient(135deg, #48bb78, #38a169);
+        color: white;
+    }
+
+    /* ════════════════════════════
+       ВКЛАДКИ
+    ════════════════════════════ */
+    .tabs-wrapper {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+        overflow: hidden;
+    }
+
+    .tabs-header {
+        display: flex;
+        border-bottom: 1px solid #e2e8f0;
+        background: #f7f8fa;
+        padding: 0 8px;
+        gap: 4px;
+    }
+
+    .tab-btn {
+        padding: 16px 24px;
+        font-size: 14px;
+        font-weight: 500;
+        color: #718096;
+        background: none;
+        border: none;
+        cursor: pointer;
+        transition: color 0.2s;
+        border-bottom: 3px solid transparent;
+        margin-bottom: -1px;
+        white-space: nowrap;
+    }
+
+    .tab-btn:hover {
+        color: #2d3748;
+    }
+
+    .tab-btn.active {
+        color: #667eea;
+        background: white;
+        border-bottom-color: #667eea;
+        font-weight: 600;
+    }
+
+    .tab-content {
         display: none;
-        margin-top: 20px;
-        padding: 12px;
-        background-color: #e8f5e9;
-        border-radius: 4px;
-        text-align: center;
-        color: #2e7d32;
-        font-weight: bold;
+        padding: 32px;
+    }
+
+    .tab-content.active {
+        display: block;
+    }
+
+    /* ════════════════════════════
+       ТОГЛЫ
+    ════════════════════════════ */
+    .toggles-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 24px;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    .toggle-group {
+        display: flex;
+        background: #f0f2f5;
+        border-radius: 10px;
+        padding: 4px;
+        gap: 2px;
+    }
+
+    .toggle-btn {
+        padding: 8px 18px;
+        border: none;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: 500;
+        color: #718096;
+        background: none;
+        cursor: pointer;
+        transition: all 0.2s;
+        white-space: nowrap;
+    }
+
+    .toggle-btn:hover {
+        color: #2d3748;
+        background: rgba(255,255,255,0.6);
+    }
+
+    .toggle-btn.active {
+        background: white;
+        color: #667eea;
+        font-weight: 600;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    }
+
+    /* ════════════════════════════
+       ФОРМА ПОИСКА
+    ════════════════════════════ */
+    .search-form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    /* Большой инпут Наименование */
+    .input-full {
+        width: 100%;
+    }
+
+    /* Сетка 3 колонки */
+    .grid-3 {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+    }
+
+    /* Сетка 2 колонки */
+    .grid-2 {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+
+    /* Лейбл + инпут */
+    .form-field {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .form-field label {
+        font-size: 12px;
+        font-weight: 600;
+        color: #718096;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .form-input {
+        width: 100%;
+        background: #f7f8fa;
+        border: 1.5px solid #e2e8f0;
+        border-radius: 10px;
+        padding: 11px 14px;
+        font-size: 14px;
+        color: #2d3748;
+        outline: none;
+        transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+    }
+
+    .form-input:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102,126,234,0.12);
+        background: white;
+    }
+
+    .form-input::placeholder {
+        color: #cbd5e0;
+    }
+
+    /* ════════════════════════════
+       ЧЕКБОКС
+    ════════════════════════════ */
+    .checkbox-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+        user-select: none;
+        width: fit-content;
+    }
+
+    .checkbox-row input[type="checkbox"] {
+        display: none;
+    }
+
+    .checkbox-custom {
+        width: 18px;
+        height: 18px;
+        border: 2px solid #cbd5e0;
+        border-radius: 5px;
+        background: #f7f8fa;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        transition: all 0.2s;
+    }
+
+    .checkbox-row input[type="checkbox"]:checked + .checkbox-custom {
+        background: #667eea;
+        border-color: #667eea;
+    }
+
+    .checkbox-row input[type="checkbox"]:checked + .checkbox-custom::after {
+        content: '✓';
+        color: white;
+        font-size: 11px;
+        font-weight: 700;
+    }
+
+    .checkbox-label {
+        font-size: 14px;
+        color: #4a5568;
+        font-weight: 500;
+    }
+
+    .checkbox-row:hover .checkbox-custom {
+        border-color: #667eea;
+    }
+
+    /* ════════════════════════════
+       НИЖНЯЯ СТРОКА ФОРМЫ
+    ════════════════════════════ */
+    .form-bottom-row {
+        display: flex;
+        align-items: flex-end;
+        gap: 16px;
+        flex-wrap: wrap;
+    }
+
+    .form-bottom-inputs {
+        display: flex;
+        gap: 16px;
+        flex: 1;
+        min-width: 0;
+    }
+
+    .form-bottom-inputs .form-field {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .form-bottom-actions {
+        display: flex;
+        gap: 10px;
+        flex-shrink: 0;
+        padding-bottom: 1px;
+    }
+
+    .btn-search {
+        padding: 11px 28px;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: opacity 0.2s, transform 0.15s;
+        white-space: nowrap;
+    }
+
+    .btn-search:hover {
+        opacity: 0.9;
+        transform: translateY(-1px);
+    }
+
+    .btn-clear {
+        padding: 11px 24px;
+        background: #f0f2f5;
+        color: #718096;
+        border: 1.5px solid #e2e8f0;
+        border-radius: 10px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        white-space: nowrap;
+    }
+
+    .btn-clear:hover {
+        background: #fee2e2;
+        color: #e53e3e;
+        border-color: #feb2b2;
+    }
+
+    /* ════════════════════════════
+       РАЗДЕЛИТЕЛЬ
+    ════════════════════════════ */
+    .form-divider {
+        height: 1px;
+        background: #e2e8f0;
+        margin: 4px 0;
+    }
+
+    /* ════════════════════════════
+       ПУСТАЯ ВКЛАДКА
+    ════════════════════════════ */
+    .empty-tab {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 80px 32px;
+        color: #a0aec0;
+        gap: 12px;
+    }
+
+    .empty-tab-icon {
+        font-size: 48px;
+        opacity: 0.4;
+    }
+
+    .empty-tab-text {
+        font-size: 15px;
+        color: #a0aec0;
+    }
+
+    /* ════════════════════════════
+       АДАПТИВ
+    ════════════════════════════ */
+    @media (max-width: 768px) {
+        header { padding: 0 16px; }
+        nav { display: none; }
+        main { padding: 24px 16px; }
+
+        .page-header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .grid-3 { grid-template-columns: 1fr; }
+        .grid-2 { grid-template-columns: 1fr; }
+
+        .form-bottom-row {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .form-bottom-inputs {
+            flex-direction: column;
+        }
+
+        .form-bottom-actions {
+            justify-content: flex-end;
+        }
+
+        .toggles-row {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .tab-content { padding: 20px 16px; }
+    }
+
+    @media (max-width: 1024px) {
+        .grid-3 {
+            grid-template-columns: repeat(2, 1fr);
+        }
     }
   </style>
 </head>
 <body>
 
-<div class="container">
-  <h2>Поиск</h2>
-
-  <div class="search-box">
-    <input
-            type="text"
-            id="search-input"
-            placeholder="Введите запрос..."
-    />
-    <button id="search-btn" onclick="search()">Найти</button>
+<!-- ══════════════════════════════
+     ШАПКА
+══════════════════════════════ -->
+<header>
+  <div class="header-left">
+    <a href="#" class="header-logo">
+      <div class="logo-icon">🏢</div>
+      <span class="logo-text">BizPortal</span>
+    </a>
+    <nav>
+      <a href="#">Приложения</a>
+      <a href="#" class="active">Поиск лиц</a>
+      <a href="#">О портале</a>
+      <a href="#">Генератор QR</a>
+    </nav>
   </div>
 
-  <!-- Лоадер -->
-  <div id="loader">
-    <div class="spinner"></div>
-    <span>Загрузка...</span>
+  <div class="header-right">
+    <button class="bell-btn" title="Уведомления">
+      🔔
+      <span class="bell-badge"></span>
+    </button>
+    <div class="user-info">
+      <div class="user-avatar">ИВ</div>
+      <span class="user-name">Иванов И.И.</span>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════════════════════════
+     ОСНОВНОЙ КОНТЕНТ
+══════════════════════════════ -->
+<main>
+
+  <!-- Верхний блок -->
+  <div class="page-header">
+    <div class="page-header-left">
+      <div class="page-title">Поиск и добавление лиц</div>
+      <div class="page-subtitle">Управление физическими и юридическими лицами</div>
+    </div>
+    <div class="page-header-right">
+      <button class="btn-primary btn-ul" onclick="alert('Добавление юридического лица')">
+        + Добавление ЮЛ
+      </button>
+      <button class="btn-primary btn-fl" onclick="alert('Добавление физического лица')">
+        + Добавление ФЛ
+      </button>
+    </div>
   </div>
 
-  <!-- Список результатов -->
-  <ul id="results"></ul>
+  <!-- Вкладки -->
+  <div class="tabs-wrapper">
 
-  <!-- Выбранный элемент -->
-  <div id="selected-result"></div>
-</div>
+    <div class="tabs-header">
+      <button class="tab-btn active" onclick="switchTab('search', this)">
+        Поиск
+      </button>
+      <button class="tab-btn" onclick="switchTab('list', this)">
+        Формирование списка лиц по виду деятельности
+      </button>
+    </div>
+
+    <!-- ══ Вкладка: Поиск ══ -->
+    <div class="tab-content active" id="tab-search">
+
+      <!-- Строка тоглов -->
+      <div class="toggles-row">
+
+        <!-- Левые тоглы: тип лица -->
+        <div class="toggle-group">
+          <button class="toggle-btn active" onclick="toggleType(this, 'fl')">
+            Физические
+          </button>
+          <button class="toggle-btn" onclick="toggleType(this, 'ul')">
+            Юридические
+          </button>
+        </div>
+
+        <!-- Правые тоглы: резидентность -->
+        <div class="toggle-group">
+          <button class="toggle-btn active" onclick="toggleResidency(this)">
+            Все
+          </button>
+          <button class="toggle-btn" onclick="toggleResidency(this)">
+            Резидент
+          </button>
+          <button class="toggle-btn" onclick="toggleResidency(this)">
+            Нерезидент
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Форма -->
+      <div class="search-form">
+
+        <!-- Наименование -->
+        <div class="form-field input-full">
+          <label>Наименование</label>
+          <input
+                  class="form-input"
+                  type="text"
+                  placeholder="Введите наименование..."
+                  id="fieldName"
+          />
+        </div>
+
+        <!-- Код ЕУФР, ИНН, ОГРН -->
+        <div class="grid-3">
+          <div class="form-field">
+            <label>Код ЕУФР</label>
+            <input
+                    class="form-input"
+                    type="text"
+                    placeholder="Введите код ЕУФР"
+                    id="fieldEufr"
+            />
+          </div>
+          <div class="form-field">
+            <label>ИНН</label>
+            <input
+                    class="form-input"
+                    type="text"
+                    placeholder="Введите ИНН"
+                    id="fieldInn"
+                    maxlength="12"
+            />
+          </div>
+          <div class="form-field">
+            <label>ОГРН</label>
+            <input
+                    class="form-input"
+                    type="text"
+                    placeholder="Введите ОГРН"
+                    id="fieldOgrn"
+                    maxlength="15"
+            />
+          </div>
+        </div>
+
+        <div class="form-divider"></div>
+
+        <!-- Чекбокс -->
+        <label class="checkbox-row">
+          <input type="checkbox" id="checkHistory" />
+          <span class="checkbox-custom"></span>
+          <span class="checkbox-label">Искать с учётом исторических данных</span>
+        </label>
+
+        <div class="form-divider"></div>
+
+        <!-- Нижняя строка: Учётный номер + Тип УФР + кнопки -->
+        <div class="form-bottom-row">
+
+          <div class="form-bottom-inputs">
+            <div class="form-field">
+              <label>Учётный номер</label>
+              <input
+                      class="form-input"
+                      type="text"
+                      placeholder="Введите учётный номер"
+                      id="fieldAccountNum"
+              />
+            </div>
+            <div class="form-field">
+              <label>Тип УФР</label>
+              <input
+                      class="form-input"
+                      type="text"
+                      placeholder="Введите тип УФР"
+                      id="fieldUfrType"
+              />
+            </div>
+          </div>
+
+          <div class="form-bottom-actions">
+            <button class="btn-clear" onclick="clearForm()">
+              Очистить
+            </button>
+            <button class="btn-search" onclick="doSearch()">
+              Найти
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ══ Вкладка: Формирование списка ══ -->
+    <div class="tab-content" id="tab-list">
+      <div class="empty-tab">
+        <div class="empty-tab-icon">📋</div>
+        <div class="empty-tab-text">Раздел находится в разработке</div>
+      </div>
+    </div>
+
+  </div>
+</main>
 
 <script>
-  // Моковые данные
-  const mockData = {
-      "java":   ["Java Core", "Java Spring", "Java Hibernate", "Java Maven"],
-      "python": ["Python Django", "Python Flask", "Python FastAPI", "Python NumPy"],
-      "javascript": ["JavaScript React", "JavaScript Vue", "JavaScript Node", "JavaScript Angular"],
-  };
-
-  function search() {
-      const query   = document.getElementById('search-input').value.toLowerCase().trim();
-      const loader  = document.getElementById('loader');
-      const results = document.getElementById('results');
-      const selected = document.getElementById('selected-result');
-
-      // Сбросить предыдущие результаты
-      results.innerHTML  = '';
-      results.style.display  = 'none';
-      selected.style.display = 'none';
-      selected.textContent   = '';
-
-      if (!query) return;
-
-      // Показать лоадер
-      loader.style.display = 'block';
-
-      // Имитация загрузки 1.5 секунды
-      setTimeout(() => {
-          loader.style.display = 'none';
-
-          // Найти результаты
-          const data = mockData[query] ||
-              Object.values(mockData)
-                    .flat()
-                    .filter(item => item.toLowerCase().includes(query));
-
-          if (data.length === 0) {
-              results.innerHTML = '<li>Ничего не найдено</li>';
-          } else {
-              data.forEach((item, index) => {
-                  const li = document.createElement('li');
-                  li.textContent       = item;
-                  li.id                = `result-${index}`;
-                  li.setAttribute('data-value', item);
-                  li.onclick = () => selectItem(li, item);
-                  results.appendChild(li);
-              });
-          }
-
-          results.style.display = 'block';
-      }, 1500);
+  // ── Переключение вкладок ──
+  function switchTab(tabName, btn) {
+      document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('tab-' + tabName).classList.add('active');
+      btn.classList.add('active');
   }
 
-  function selectItem(element, value) {
-      // Убрать выделение со всех
-      document.querySelectorAll('#results li').forEach(li => {
-          li.classList.remove('selected');
-      });
-
-      // Выделить выбранный
-      element.classList.add('selected');
-
-      // Показать выбранный результат
-      const selected = document.getElementById('selected-result');
-      selected.style.display  = 'block';
-      selected.textContent    = 'Выбрано: ' + value;
-      selected.id             = 'selected-result';
+  // ── Тоглы типа лица ──
+  function toggleType(btn, type) {
+      btn.closest('.toggle-group')
+         .querySelectorAll('.toggle-btn')
+         .forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
   }
 
-  // Поиск по Enter
-  document.getElementById('search-input')
-          .addEventListener('keypress', function(e) {
-              if (e.key === 'Enter') search();
+  // ── Тоглы резидентности ──
+  function toggleResidency(btn) {
+      btn.closest('.toggle-group')
+         .querySelectorAll('.toggle-btn')
+         .forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+  }
+
+  // ── Очистить форму ──
+  function clearForm() {
+      ['fieldName','fieldEufr','fieldInn',
+       'fieldOgrn','fieldAccountNum','fieldUfrType']
+          .forEach(id => document.getElementById(id).value = '');
+
+      document.getElementById('checkHistory').checked = false;
+
+      // Сбросить тоглы
+      document.querySelectorAll('.toggle-group').forEach(group => {
+          group.querySelectorAll('.toggle-btn').forEach((btn, i) => {
+              btn.classList.toggle('active', i === 0);
           });
+      });
+  }
+
+  // ── Поиск ──
+  function doSearch() {
+      const data = {
+          name       : document.getElementById('fieldName').value,
+          eufr       : document.getElementById('fieldEufr').value,
+          inn        : document.getElementById('fieldInn').value,
+          ogrn       : document.getElementById('fieldOgrn').value,
+          accountNum : document.getElementById('fieldAccountNum').value,
+          ufrType    : document.getElementById('fieldUfrType').value,
+          history    : document.getElementById('checkHistory').checked,
+      };
+      console.log('Поиск:', data);
+      alert(`Выполняется поиск...\nНаименование: ${data.name || '—'}\nИНН: ${data.inn || '—'}`);
+  }
 </script>
 
 </body>

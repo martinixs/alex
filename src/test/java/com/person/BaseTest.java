@@ -16,8 +16,8 @@ public class BaseTest {
 
     // Читаем из properties
     private static final String DRIVER_PATH = ConfigReader.get("webdriver.chrome.driver");
-    private static final String BASE_URL     = ConfigReader.get("base.url");
-    private static final int    TIMEOUT      = ConfigReader.getInt("webdriver.timeout");
+    private static final String BASE_URL = ConfigReader.get("base.url");
+    private static final int TIMEOUT = ConfigReader.getInt("webdriver.timeout");
 
     @BeforeMethod
     public void setUp() {
@@ -25,10 +25,11 @@ public class BaseTest {
         System.setProperty("webdriver.chrome.driver", DRIVER_PATH);
 
         ChromeOptions options = new ChromeOptions();
+        options.addArguments("--start-maximized");
         // options.addArguments("--headless");
 
         driver = new ChromeDriver(options);
-        wait   = new WebDriverWait(driver, Duration.ofSeconds(TIMEOUT));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(TIMEOUT));
 
         // Открыть базовый URL
         driver.get(BASE_URL);
