@@ -41,7 +41,7 @@ public class CaseOpenApp extends BaseTest {
         driver.findElement(By.id("fieldName")).sendKeys("Фтн ФИН");
         driver.findElement(By.id("fieldEufr")).sendKeys("EAH");
 
-        driver.findElement(By.xpath("//button[@class='btn-search']")).click();
+        driver.findElement(By.xpath("//button[@class='btn-action btn-find']")).click();
 
         try {
             Thread.sleep(3600);

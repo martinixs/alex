@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Поиск лиц — Портал бизнес-пользователей</title>
+  <title>Поиск и добавление лиц</title>
   <style>
     * {
         margin: 0;
@@ -163,100 +163,96 @@
        ОСНОВНОЙ КОНТЕНТ
     ════════════════════════════ */
     main {
-        max-width: 1200px;
+        max-width: 1300px;
         margin: 0 auto;
-        padding: 36px 32px 60px;
+        padding: 32px 32px 60px;
     }
 
     /* ════════════════════════════
-       ВЕРХНИЙ БЛОК — ЗАГОЛОВОК
+       ВЕРХНЯЯ ПАНЕЛЬ
     ════════════════════════════ */
-    .page-header {
+    .top-bar {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin-bottom: 28px;
-        gap: 24px;
-        flex-wrap: wrap;
+        margin-bottom: 24px;
+        gap: 16px;
     }
 
-    .page-header-left {
+    .top-bar-left {
         display: flex;
         flex-direction: column;
-        gap: 4px;
+        gap: 2px;
     }
 
     .page-title {
-        font-size: 26px;
+        font-size: 22px;
         font-weight: 700;
         color: #1a202c;
     }
 
     .page-subtitle {
-        font-size: 14px;
-        color: #718096;
+        font-size: 13px;
+        color: #a0aec0;
     }
 
-    .page-header-right {
+    .top-bar-right {
         display: flex;
-        gap: 12px;
-        flex-wrap: wrap;
+        align-items: center;
+        gap: 0;
     }
 
-    .btn-primary {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 11px 20px;
-        border: none;
-        border-radius: 10px;
-        font-size: 14px;
+    .btn-top {
+        background: #ffffff;
+        color: #2d3748;
+        border: 1px solid #cbd5e0;
+        padding: 10px 20px;
+        font-size: 13px;
         font-weight: 600;
         cursor: pointer;
-        transition: opacity 0.2s, transform 0.15s;
+        border-radius: 0;
+        transition: background 0.2s, color 0.2s;
         white-space: nowrap;
+        display: flex;
+        align-items: center;
+        gap: 6px;
     }
 
-    .btn-primary:hover {
-        opacity: 0.9;
-        transform: translateY(-1px);
+    .btn-top:first-child {
+        border-right: none;
     }
 
-    .btn-primary:active {
-        transform: translateY(0);
+    .btn-top:hover {
+        background: #f7f8fa;
+        color: #1a202c;
     }
 
-    .btn-ul {
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        color: white;
-    }
-
-    .btn-fl {
-        background: linear-gradient(135deg, #48bb78, #38a169);
-        color: white;
+    .btn-top .btn-icon {
+        font-size: 15px;
     }
 
     /* ════════════════════════════
-       ВКЛАДКИ
+       БЛОК ВКЛАДОК
     ════════════════════════════ */
     .tabs-wrapper {
         background: white;
-        border-radius: 20px;
-        box-shadow: 0 4px 24px rgba(0,0,0,0.08);
-        overflow: hidden;
+        border-radius: 0;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+        overflow: visible;
+        margin-bottom: 20px;
     }
 
     .tabs-header {
         display: flex;
-        border-bottom: 1px solid #e2e8f0;
+        border-bottom: 2px solid #e2e8f0;
         background: #f7f8fa;
-        padding: 0 8px;
-        gap: 4px;
+        padding: 0 16px;
+        gap: 0;
     }
 
     .tab-btn {
-        padding: 16px 24px;
-        font-size: 14px;
+        padding: 14px 24px;
+        font-size: 13px;
         font-weight: 500;
         color: #718096;
         background: none;
@@ -264,7 +260,7 @@
         cursor: pointer;
         transition: color 0.2s;
         border-bottom: 3px solid transparent;
-        margin-bottom: -1px;
+        margin-bottom: -2px;
         white-space: nowrap;
     }
 
@@ -281,7 +277,7 @@
 
     .tab-content {
         display: none;
-        padding: 32px;
+        padding: 24px;
     }
 
     .tab-content.active {
@@ -289,304 +285,356 @@
     }
 
     /* ════════════════════════════
-       ТОГЛЫ
+       ФОРМА ПОИСКА
     ════════════════════════════ */
-    .toggles-row {
+
+    /* Радиокнопки — строка */
+    .radio-row {
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        margin-bottom: 24px;
+        gap: 0;
+        margin-bottom: 20px;
         flex-wrap: wrap;
-        gap: 16px;
+        row-gap: 12px;
     }
 
-    .toggle-group {
+    .radio-group {
         display: flex;
-        background: #f0f2f5;
-        border-radius: 10px;
-        padding: 4px;
-        gap: 2px;
+        align-items: center;
+        gap: 0;
+        border: 1px solid #e2e8f0;
     }
 
-    .toggle-btn {
+    .radio-group + .radio-group {
+        margin-left: 32px;
+    }
+
+    .radio-group label {
+        display: flex;
+        align-items: center;
+        gap: 0;
         padding: 8px 18px;
-        border: none;
-        border-radius: 8px;
         font-size: 13px;
         font-weight: 500;
-        color: #718096;
-        background: none;
+        color: #4a5568;
         cursor: pointer;
-        transition: all 0.2s;
+        border-right: 1px solid #e2e8f0;
+        transition: background 0.15s, color 0.15s;
+        user-select: none;
         white-space: nowrap;
     }
 
-    .toggle-btn:hover {
-        color: #2d3748;
-        background: rgba(255,255,255,0.6);
+    .radio-group label:last-child {
+        border-right: none;
     }
 
-    .toggle-btn.active {
-        background: white;
+    .radio-group input[type="radio"] {
+        display: none;
+    }
+
+    .radio-group input[type="radio"]:checked + span {
         color: #667eea;
         font-weight: 600;
-        box-shadow: 0 1px 4px rgba(0,0,0,0.1);
     }
 
-    /* ════════════════════════════
-       ФОРМА ПОИСКА
-    ════════════════════════════ */
-    .search-form {
+    .radio-group label:has(input:checked) {
+        background: #ebf4ff;
+        color: #667eea;
+    }
+
+    .radio-group label:hover:not(:has(input:checked)) {
+        background: #f7f8fa;
+    }
+
+    /* Разделитель группы */
+    .radio-divider {
+        width: 1px;
+        height: 36px;
+        background: #e2e8f0;
+        margin: 0 24px;
+    }
+
+    /* Строка инпутов */
+    .inputs-row {
+        display: grid;
+        gap: 12px;
+        margin-bottom: 16px;
+    }
+
+    .inputs-row-4 {
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+    }
+
+    .inputs-row-2 {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .form-group {
         display: flex;
         flex-direction: column;
-        gap: 20px;
+        gap: 5px;
     }
 
-    /* Большой инпут Наименование */
-    .input-full {
-        width: 100%;
-    }
-
-    /* Сетка 3 колонки */
-    .grid-3 {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 16px;
-    }
-
-    /* Сетка 2 колонки */
-    .grid-2 {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 16px;
-    }
-
-    /* Лейбл + инпут */
-    .form-field {
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-    }
-
-    .form-field label {
-        font-size: 12px;
+    .form-group label {
+        font-size: 11px;
         font-weight: 600;
-        color: #718096;
+        color: #a0aec0;
         text-transform: uppercase;
-        letter-spacing: 0.5px;
+        letter-spacing: 0.6px;
     }
 
     .form-input {
         width: 100%;
-        background: #f7f8fa;
-        border: 1.5px solid #e2e8f0;
-        border-radius: 10px;
-        padding: 11px 14px;
-        font-size: 14px;
+        border: 1px solid #e2e8f0;
+        border-radius: 0;
+        padding: 9px 12px;
+        font-size: 13px;
         color: #2d3748;
+        background: #fafafa;
         outline: none;
         transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
     }
 
     .form-input:focus {
         border-color: #667eea;
-        box-shadow: 0 0 0 3px rgba(102,126,234,0.12);
         background: white;
+        box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
     }
 
     .form-input::placeholder {
         color: #cbd5e0;
+        font-size: 12px;
     }
 
-    /* ════════════════════════════
-       ЧЕКБОКС
-    ════════════════════════════ */
+    /* Чекбокс */
     .checkbox-row {
         display: flex;
         align-items: center;
         gap: 10px;
-        cursor: pointer;
-        user-select: none;
-        width: fit-content;
+        margin-bottom: 20px;
+        margin-top: 4px;
     }
 
     .checkbox-row input[type="checkbox"] {
-        display: none;
-    }
-
-    .checkbox-custom {
-        width: 18px;
-        height: 18px;
-        border: 2px solid #cbd5e0;
-        border-radius: 5px;
-        background: #f7f8fa;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        width: 16px;
+        height: 16px;
+        accent-color: #667eea;
+        cursor: pointer;
+        border-radius: 0;
         flex-shrink: 0;
-        transition: all 0.2s;
     }
 
-    .checkbox-row input[type="checkbox"]:checked + .checkbox-custom {
-        background: #667eea;
-        border-color: #667eea;
-    }
-
-    .checkbox-row input[type="checkbox"]:checked + .checkbox-custom::after {
-        content: '✓';
-        color: white;
-        font-size: 11px;
-        font-weight: 700;
-    }
-
-    .checkbox-label {
-        font-size: 14px;
+    .checkbox-row label {
+        font-size: 13px;
         color: #4a5568;
-        font-weight: 500;
+        cursor: pointer;
+        user-select: none;
     }
 
-    .checkbox-row:hover .checkbox-custom {
-        border-color: #667eea;
-    }
-
-    /* ════════════════════════════
-       НИЖНЯЯ СТРОКА ФОРМЫ
-    ════════════════════════════ */
+    /* Нижняя строка формы */
     .form-bottom-row {
         display: flex;
         align-items: flex-end;
+        justify-content: space-between;
         gap: 16px;
         flex-wrap: wrap;
     }
 
     .form-bottom-inputs {
         display: flex;
-        gap: 16px;
+        gap: 12px;
         flex: 1;
         min-width: 0;
     }
 
-    .form-bottom-inputs .form-field {
+    .form-bottom-inputs .form-group {
         flex: 1;
-        min-width: 0;
+        min-width: 160px;
     }
 
     .form-bottom-actions {
         display: flex;
-        gap: 10px;
+        gap: 0;
         flex-shrink: 0;
-        padding-bottom: 1px;
     }
 
-    .btn-search {
-        padding: 11px 28px;
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        color: white;
-        border: none;
-        border-radius: 10px;
-        font-size: 14px;
+    /* Кнопки найти / очистить */
+    .btn-action {
+        padding: 9px 28px;
+        font-size: 13px;
         font-weight: 600;
+        border: none;
+        border-radius: 0;
         cursor: pointer;
-        transition: opacity 0.2s, transform 0.15s;
+        transition: opacity 0.2s, filter 0.2s;
         white-space: nowrap;
     }
 
-    .btn-search:hover {
-        opacity: 0.9;
-        transform: translateY(-1px);
+    .btn-action:hover {
+        filter: brightness(0.95);
+    }
+
+    .btn-find {
+        background: #38a169;
+        color: white;
+        border: 1px solid #38a169;
+    }
+
+    .btn-find:hover {
+        background: #2f855a;
+        border-color: #2f855a;
     }
 
     .btn-clear {
-        padding: 11px 24px;
-        background: #f0f2f5;
+        background: #edf2f7;
         color: #718096;
-        border: 1.5px solid #e2e8f0;
-        border-radius: 10px;
-        font-size: 14px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.2s;
-        white-space: nowrap;
+        border: 1px solid #e2e8f0;
+        border-left: none;
     }
 
     .btn-clear:hover {
-        background: #fee2e2;
-        color: #e53e3e;
-        border-color: #feb2b2;
+        background: #e2e8f0;
+        color: #4a5568;
     }
 
-    /* ════════════════════════════
-       РАЗДЕЛИТЕЛЬ
-    ════════════════════════════ */
+    /* Разделитель формы */
     .form-divider {
         height: 1px;
         background: #e2e8f0;
-        margin: 4px 0;
+        margin: 16px 0;
     }
 
     /* ════════════════════════════
-       ПУСТАЯ ВКЛАДКА
+       ТАБЛИЦА РЕЗУЛЬТАТОВ
     ════════════════════════════ */
-    .empty-tab {
+    .results-block {
+        background: white;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+        overflow: hidden;
+    }
+
+    .results-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 20px;
+        border-bottom: 1px solid #e2e8f0;
+        background: #f7f8fa;
+    }
+
+    .results-title {
+        font-size: 13px;
+        font-weight: 600;
+        color: #4a5568;
+    }
+
+    .results-count {
+        font-size: 12px;
+        color: #a0aec0;
+    }
+
+    .results-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+    }
+
+    .results-table thead tr {
+        background: #f7f8fa;
+        border-bottom: 2px solid #e2e8f0;
+    }
+
+    .results-table thead th {
+        padding: 11px 16px;
+        text-align: left;
+        font-size: 11px;
+        font-weight: 700;
+        color: #a0aec0;
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+        white-space: nowrap;
+    }
+
+    .results-table tbody tr {
+        border-bottom: 1px solid #f0f2f5;
+        transition: background 0.15s;
+    }
+
+    .results-table tbody tr:hover {
+        background: #f7f8ff;
+    }
+
+    .results-table tbody td {
+        padding: 12px 16px;
+        color: #4a5568;
+    }
+
+    /* Пустое состояние таблицы */
+    .table-empty {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        padding: 80px 32px;
-        color: #a0aec0;
+        padding: 60px 20px;
         gap: 12px;
     }
 
-    .empty-tab-icon {
-        font-size: 48px;
-        opacity: 0.4;
+    .table-empty-icon {
+        font-size: 40px;
+        opacity: 0.25;
     }
 
-    .empty-tab-text {
-        font-size: 15px;
+    .table-empty-text {
+        font-size: 14px;
         color: #a0aec0;
+        font-weight: 500;
+    }
+
+    .table-empty-hint {
+        font-size: 12px;
+        color: #cbd5e0;
     }
 
     /* ════════════════════════════
        АДАПТИВ
     ════════════════════════════ */
+    @media (max-width: 1024px) {
+        .inputs-row-4 {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+
     @media (max-width: 768px) {
         header { padding: 0 16px; }
         nav { display: none; }
-        main { padding: 24px 16px; }
+        main { padding: 20px 16px 40px; }
 
-        .page-header {
+        .top-bar {
             flex-direction: column;
             align-items: flex-start;
         }
 
-        .grid-3 { grid-template-columns: 1fr; }
-        .grid-2 { grid-template-columns: 1fr; }
+        .inputs-row-4,
+        .inputs-row-2 {
+            grid-template-columns: 1fr;
+        }
 
         .form-bottom-row {
             flex-direction: column;
             align-items: stretch;
         }
 
-        .form-bottom-inputs {
-            flex-direction: column;
-        }
-
         .form-bottom-actions {
             justify-content: flex-end;
         }
 
-        .toggles-row {
+        .radio-row {
             flex-direction: column;
             align-items: flex-start;
         }
 
-        .tab-content { padding: 20px 16px; }
-    }
-
-    @media (max-width: 1024px) {
-        .grid-3 {
-            grid-template-columns: repeat(2, 1fr);
+        .radio-divider {
+            display: none;
         }
     }
   </style>
@@ -599,14 +647,12 @@
 <header>
   <div class="header-left">
     <a href="#" class="header-logo">
-      <div class="logo-icon">🏢</div>
       <span class="logo-text">BizPortal</span>
     </a>
     <nav>
-      <a href="#">Приложения</a>
-      <a href="#" class="active">Поиск лиц</a>
-      <a href="#">О портале</a>
-      <a href="#">Генератор QR</a>
+      <a href="#">Главная</a>
+      <a href="#" class="active">История изменений</a>
+      <a href="#">Деловая репутация</a>
     </nav>
   </div>
 
@@ -627,25 +673,24 @@
 ══════════════════════════════ -->
 <main>
 
-  <!-- Верхний блок -->
-  <div class="page-header">
-    <div class="page-header-left">
+  <!-- Верхняя панель -->
+  <div class="top-bar">
+    <div class="top-bar-left">
       <div class="page-title">Поиск и добавление лиц</div>
       <div class="page-subtitle">Управление физическими и юридическими лицами</div>
     </div>
-    <div class="page-header-right">
-      <button class="btn-primary btn-ul" onclick="alert('Добавление юридического лица')">
-        + Добавление ЮЛ
+    <div class="top-bar-right">
+      <button class="btn-top" onclick="handleAdd('ЮЛ')">
+         Добавление ЮЛ
       </button>
-      <button class="btn-primary btn-fl" onclick="alert('Добавление физического лица')">
-        + Добавление ФЛ
+      <button class="btn-top" onclick="handleAdd('ФЛ')">
+         Добавление ФЛ
       </button>
     </div>
   </div>
 
   <!-- Вкладки -->
   <div class="tabs-wrapper">
-
     <div class="tabs-header">
       <button class="tab-btn active" onclick="switchTab('search', this)">
         Поиск
@@ -655,147 +700,146 @@
       </button>
     </div>
 
-    <!-- ══ Вкладка: Поиск ══ -->
+    <!-- ── Вкладка: Поиск ── -->
     <div class="tab-content active" id="tab-search">
 
-      <!-- Строка тоглов -->
-      <div class="toggles-row">
+      <!-- Радиокнопки -->
+      <div class="radio-row">
 
-        <!-- Левые тоглы: тип лица -->
-        <div class="toggle-group">
-          <button class="toggle-btn active" onclick="toggleType(this, 'fl')">
-            Физические
-          </button>
-          <button class="toggle-btn" onclick="toggleType(this, 'ul')">
-            Юридические
-          </button>
+        <!-- Тип лица -->
+        <div class="radio-group">
+          <label>
+            <input type="radio" name="person-type" value="fl" checked>
+            <span>Физические</span>
+          </label>
+          <label>
+            <input type="radio" name="person-type" value="ul">
+            <span>Юридические</span>
+          </label>
         </div>
 
-        <!-- Правые тоглы: резидентность -->
-        <div class="toggle-group">
-          <button class="toggle-btn active" onclick="toggleResidency(this)">
-            Все
-          </button>
-          <button class="toggle-btn" onclick="toggleResidency(this)">
-            Резидент
-          </button>
-          <button class="toggle-btn" onclick="toggleResidency(this)">
-            Нерезидент
-          </button>
+        <div class="radio-divider"></div>
+
+        <!-- Резидентность -->
+        <div class="radio-group">
+          <label>
+            <input type="radio" name="residency" value="all" checked>
+            <span>Все</span>
+          </label>
+          <label>
+            <input type="radio" name="residency" value="resident">
+            <span>Резидент</span>
+          </label>
+          <label>
+            <input type="radio" name="residency" value="nonresident">
+            <span>Нерезидент</span>
+          </label>
         </div>
 
       </div>
 
-      <!-- Форма -->
-      <div class="search-form">
-
-        <!-- Наименование -->
-        <div class="form-field input-full">
+      <!-- 4 инпута в строке -->
+      <div class="inputs-row inputs-row-4">
+        <div class="form-group">
           <label>Наименование</label>
-          <input
-                  class="form-input"
-                  type="text"
-                  placeholder="Введите наименование..."
-                  id="fieldName"
-          />
+          <input class="form-input" type="text" placeholder="Введите наименование..." id="fieldName">
         </div>
+        <div class="form-group">
+          <label>Код ЕУФР</label>
+          <input class="form-input" type="text" placeholder="Введите код..." id="fieldEufr">>
+        </div>
+        <div class="form-group">
+          <label>ИНН</label>
+          <input class="form-input" type="text" placeholder="Введите ИНН...">
+        </div>
+        <div class="form-group">
+          <label>ОГРН</label>
+          <input class="form-input" type="text" placeholder="Введите ОГРН...">
+        </div>
+      </div>
 
-        <!-- Код ЕУФР, ИНН, ОГРН -->
-        <div class="grid-3">
-          <div class="form-field">
-            <label>Код ЕУФР</label>
-            <input
-                    class="form-input"
-                    type="text"
-                    placeholder="Введите код ЕУФР"
-                    id="fieldEufr"
-            />
+      <!-- Чекбокс -->
+      <div class="checkbox-row">
+        <input type="checkbox" id="history-check">
+        <label for="history-check">Искать с учётом исторических данных</label>
+      </div>
+
+      <div class="form-divider"></div>
+
+      <!-- Нижняя строка: инпуты + кнопки -->
+      <div class="form-bottom-row">
+        <div class="form-bottom-inputs">
+          <div class="form-group">
+            <label>Учётный номер</label>
+            <input class="form-input" type="text" placeholder="Введите учётный номер...">
           </div>
-          <div class="form-field">
-            <label>ИНН</label>
-            <input
-                    class="form-input"
-                    type="text"
-                    placeholder="Введите ИНН"
-                    id="fieldInn"
-                    maxlength="12"
-            />
-          </div>
-          <div class="form-field">
-            <label>ОГРН</label>
-            <input
-                    class="form-input"
-                    type="text"
-                    placeholder="Введите ОГРН"
-                    id="fieldOgrn"
-                    maxlength="15"
-            />
+          <div class="form-group">
+            <label>Тип УФР</label>
+            <input class="form-input" type="text" placeholder="Введите тип УФР...">
           </div>
         </div>
 
-        <div class="form-divider"></div>
-
-        <!-- Чекбокс -->
-        <label class="checkbox-row">
-          <input type="checkbox" id="checkHistory" />
-          <span class="checkbox-custom"></span>
-          <span class="checkbox-label">Искать с учётом исторических данных</span>
-        </label>
-
-        <div class="form-divider"></div>
-
-        <!-- Нижняя строка: Учётный номер + Тип УФР + кнопки -->
-        <div class="form-bottom-row">
-
-          <div class="form-bottom-inputs">
-            <div class="form-field">
-              <label>Учётный номер</label>
-              <input
-                      class="form-input"
-                      type="text"
-                      placeholder="Введите учётный номер"
-                      id="fieldAccountNum"
-              />
-            </div>
-            <div class="form-field">
-              <label>Тип УФР</label>
-              <input
-                      class="form-input"
-                      type="text"
-                      placeholder="Введите тип УФР"
-                      id="fieldUfrType"
-              />
-            </div>
-          </div>
-
-          <div class="form-bottom-actions">
-            <button class="btn-clear" onclick="clearForm()">
-              Очистить
-            </button>
-            <button class="btn-search" onclick="doSearch()">
-              Найти
-            </button>
-          </div>
-
+        <div class="form-bottom-actions">
+          <button class="btn-action btn-find" onclick="handleSearch()">
+            Найти
+          </button>
+          <button class="btn-action btn-clear" onclick="handleClear()">
+            Очистить
+          </button>
         </div>
-
       </div>
 
     </div>
 
-    <!-- ══ Вкладка: Формирование списка ══ -->
+    <!-- ── Вкладка: Формирование списка ── -->
     <div class="tab-content" id="tab-list">
-      <div class="empty-tab">
-        <div class="empty-tab-icon">📋</div>
-        <div class="empty-tab-text">Раздел находится в разработке</div>
+      <div style="color:#a0aec0; font-size:14px; padding: 40px 0; text-align:center;">
+        Раздел в разработке
       </div>
     </div>
 
   </div>
+
+  <!-- Таблица результатов -->
+  <div class="results-block">
+    <div class="results-header">
+      <span class="results-title">Результаты поиска</span>
+      <span class="results-count" id="resultsCount">Записей не найдено</span>
+    </div>
+
+    <table class="results-table">
+      <thead>
+      <tr>
+        <th>№</th>
+        <th>Наименование</th>
+        <th>Тип лица</th>
+        <th>ИНН</th>
+        <th>ОГРН</th>
+        <th>Код ЕУФР</th>
+        <th>Резидентность</th>
+        <th>Учётный номер</th>
+        <th>Тип УФР</th>
+      </tr>
+      </thead>
+      <tbody id="resultsBody">
+      <!-- Пустое состояние -->
+      <tr>
+        <td colspan="9">
+          <div class="table-empty">
+            <div class="table-empty-icon">🔍</div>
+            <div class="table-empty-text">Нет данных для отображения</div>
+            <div class="table-empty-hint">Введите параметры поиска и нажмите «Найти»</div>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
 </main>
 
 <script>
-  // ── Переключение вкладок ──
+  // Переключение вкладок
   function switchTab(tabName, btn) {
       document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -803,51 +847,73 @@
       btn.classList.add('active');
   }
 
-  // ── Тоглы типа лица ──
-  function toggleType(btn, type) {
-      btn.closest('.toggle-group')
-         .querySelectorAll('.toggle-btn')
-         .forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
+  // Поиск
+  function handleSearch() {
+      const name    = document.querySelector('input[placeholder="Введите наименование..."]').value;
+      const inn     = document.querySelector('input[placeholder="Введите ИНН..."]').value;
+      const ogrn    = document.querySelector('input[placeholder="Введите ОГРН..."]').value;
+      const kode    = document.querySelector('input[placeholder="Введите код..."]').value;
+      const account = document.querySelector('input[placeholder="Введите учётный номер..."]').value;
+      const ufr     = document.querySelector('input[placeholder="Введите тип УФР..."]').value;
+
+      const type     = document.querySelector('input[name="person-type"]:checked').value;
+      const residency = document.querySelector('input[name="residency"]:checked').value;
+
+      const typeLabel = type === 'fl' ? 'Физическое' : 'Юридическое';
+      const resLabel  = residency === 'all' ? '—' : residency === 'resident' ? 'Резидент' : 'Нерезидент';
+
+      // Если нет ни одного параметра — показываем пустое состояние
+      if (!name && !inn && !ogrn && !kode && !account && !ufr) {
+          showEmpty();
+          return;
+      }
+
+      // Пример — показываем одну строку-заглушку
+      const tbody = document.getElementById('resultsBody');
+      tbody.innerHTML = `
+          <tr>
+              <td>1</td>
+              <td>${name || '—'}</td>
+              <td>${typeLabel}</td>
+              <td>${inn || '—'}</td>
+              <td>${ogrn || '—'}</td>
+              <td>${kode || '—'}</td>
+              <td>${resLabel}</td>
+              <td>${account || '—'}</td>
+              <td>${ufr || '—'}</td>
+          </tr>
+      `;
+      document.getElementById('resultsCount').textContent = 'Найдено записей: 1';
   }
 
-  // ── Тоглы резидентности ──
-  function toggleResidency(btn) {
-      btn.closest('.toggle-group')
-         .querySelectorAll('.toggle-btn')
-         .forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
+  // Очистить форму
+  function handleClear() {
+      document.querySelectorAll('.form-input').forEach(i => i.value = '');
+      document.getElementById('history-check').checked = false;
+      document.querySelector('input[name="person-type"][value="fl"]').checked = true;
+      document.querySelector('input[name="residency"][value="all"]').checked = true;
+      showEmpty();
   }
 
-  // ── Очистить форму ──
-  function clearForm() {
-      ['fieldName','fieldEufr','fieldInn',
-       'fieldOgrn','fieldAccountNum','fieldUfrType']
-          .forEach(id => document.getElementById(id).value = '');
-
-      document.getElementById('checkHistory').checked = false;
-
-      // Сбросить тоглы
-      document.querySelectorAll('.toggle-group').forEach(group => {
-          group.querySelectorAll('.toggle-btn').forEach((btn, i) => {
-              btn.classList.toggle('active', i === 0);
-          });
-      });
+  // Пустое состояние таблицы
+  function showEmpty() {
+      document.getElementById('resultsBody').innerHTML = `
+          <tr>
+              <td colspan="9">
+                  <div class="table-empty">
+                      <div class="table-empty-icon">🔍</div>
+                      <div class="table-empty-text">Нет данных для отображения</div>
+                      <div class="table-empty-hint">Введите параметры поиска и нажмите «Найти»</div>
+                  </div>
+              </td>
+          </tr>
+      `;
+      document.getElementById('resultsCount').textContent = 'Записей не найдено';
   }
 
-  // ── Поиск ──
-  function doSearch() {
-      const data = {
-          name       : document.getElementById('fieldName').value,
-          eufr       : document.getElementById('fieldEufr').value,
-          inn        : document.getElementById('fieldInn').value,
-          ogrn       : document.getElementById('fieldOgrn').value,
-          accountNum : document.getElementById('fieldAccountNum').value,
-          ufrType    : document.getElementById('fieldUfrType').value,
-          history    : document.getElementById('checkHistory').checked,
-      };
-      console.log('Поиск:', data);
-      alert(`Выполняется поиск...\nНаименование: ${data.name || '—'}\nИНН: ${data.inn || '—'}`);
+  // Добавление лица
+  function handleAdd(type) {
+      alert(`Открыть форму добавления: ${type}`);
   }
 </script>
 
