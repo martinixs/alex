@@ -75,11 +75,11 @@
                 <version>3.2.5</version>
                 <configuration>
                     <!-- Если используешь testng.xml -->
-                    <!--
+
                     <suiteXmlFiles>
                         <suiteXmlFile>testng.xml</suiteXmlFile>
                     </suiteXmlFiles>
-                    -->
+
                 </configuration>
             </plugin>
 

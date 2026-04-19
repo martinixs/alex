@@ -9,9 +9,17 @@ docker build -t simple-page .
 ### Запустить контейнер
 docker run -d -p 8080:80 --name my-site-container simple-page
 
-# Автоматически
+# Автоматический запуск контейнера
+ 
+Открываем терминал для ввода команд 
+### Переходим в папку
+cd docker/simple-page
+
 ### Запуск
 docker-compose up -d
+
+Проверяем, что приложение с страничками стартануло, переходим по ссылке
+http://localhost:8080/
 
 ### Остановка
 docker-compose down

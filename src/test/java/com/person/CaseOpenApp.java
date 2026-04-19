@@ -38,13 +38,13 @@ public class CaseOpenApp extends BaseTest {
 
         );
 
-        driver.findElement(By.id("fieldName")).sendKeys("Фтн ФИН");
-        driver.findElement(By.id("fieldEufr")).sendKeys("EAH");
+        driver.findElement(By.id("fieldName")).sendKeys("Что-то название ФИН");
+        driver.findElement(By.id("fieldEufr")).sendKeys("477992222");
 
         driver.findElement(By.xpath("//button[@class='btn-action btn-find']")).click();
 
         try {
-            Thread.sleep(3600);
+            Thread.sleep(5400);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
