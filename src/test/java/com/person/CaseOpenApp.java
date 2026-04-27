@@ -1,20 +1,31 @@
 package com.person;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.annotations.Test;
 
+import java.time.Duration;
+
+import static com.person.TimeSleep.*;
+
 public class CaseOpenApp extends BaseTest {
+
+
     @Test
-    public void successLoginTest() {
+    public void successLoginTest() throws InterruptedException {
         driver.get(getUrl("/"));
 
         wait.until(
                 ExpectedConditions.visibilityOfElementLocated(By.id("login"))
         ).sendKeys("admin");
+        Thread.sleep(TWO_SECOND); //
 
         driver.findElement(By.id("password")).sendKeys("1234");
+
+        Thread.sleep(TWO_SECOND); // ← пауза 2 секунды
+
         driver.findElement(By.id("signin")).click();
 
         wait.until(
@@ -23,14 +34,26 @@ public class CaseOpenApp extends BaseTest {
 
         );
 
-        driver.findElement(By.xpath("//div[@class='card-top-label' and contains(text(), 'Продажи')]")).click();
-        WebElement button = wait.until(
+        Thread.sleep(TWO_SECOND); //
+        driver.findElement(By.xpath("//div[@class='app-card']/div/button[contains(@onclick, 'Приложение ЕУФР')]"))
+                .click();
+
+        Thread.sleep(TWO_SECOND); //
+       wait.until(
                 ExpectedConditions.visibilityOfElementLocated(
-                        By.xpath("//button[contains(text(), 'Открыть приложение')]"))
-
+                        By.xpath("//button[@class='btn-open-app']"))
         );
+        Thread.sleep(TWO_SECOND);
 
-        button.click();
+        driver.findElement(By.xpath("//button[@class='panel-tab-btn' and contains(text(), 'Релизы')]")).click();
+        Thread.sleep(TWO_SECOND);
+
+        driver.findElement(By.xpath("//button[contains(text(), 'О приложении')]")).click();
+        Thread.sleep(TWO_SECOND);
+
+        driver.findElement(By.xpath("//button[@class='btn-open-app']")).click();
+
+        Thread.sleep(TWO_SECOND); //
 
         wait.until(
                 ExpectedConditions.visibilityOfElementLocated(
@@ -38,16 +61,12 @@ public class CaseOpenApp extends BaseTest {
 
         );
 
-        driver.findElement(By.id("fieldName")).sendKeys("Что-то название ФИН");
-        driver.findElement(By.id("fieldEufr")).sendKeys("477992222");
+        WebElement radio = driver.findElement(By.xpath("//input[@value='fl']"));
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].click();", radio);
 
-        driver.findElement(By.xpath("//button[@class='btn-action btn-find']")).click();
 
-        try {
-            Thread.sleep(5400);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        Thread.sleep(TEN_SECOND); //
 
     }
 }
