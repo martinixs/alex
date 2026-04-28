@@ -1,0 +1,314 @@
+
+/* ══════════════════════════════════════════
+   РАЗМЕТКА СТРАНИЦЫ ФИЗИЧЕСКОГО ЛИЦА
+   Сетка 12 колонок: 2 (сайдбар) + 10 (контент)
+══════════════════════════════════════════ */
+.person-layout {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    min-height: calc(100vh - 64px);
+}
+
+/* ════════════════════════════
+   ЛЕВАЯ БОКОВАЯ ПАНЕЛЬ
+════════════════════════════ */
+.person-sidebar {
+    background: white;
+    border-right: 1px solid #e2e8f0;
+    padding: 20px 0;
+    position: sticky;
+    top: 64px;
+    height: calc(100vh - 64px);
+    overflow-y: auto;
+}
+
+.person-nav {
+    display: flex;
+    flex-direction: column;
+}
+
+.person-nav-item {
+    display: block;
+    padding: 10px 16px;
+    font-size: 13px; font-weight: 500;
+    color: #4a5568;
+    text-decoration: none;
+    border-left: 3px solid transparent;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+    line-height: 1.35;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.person-nav-item:hover {
+    background: #f7f8fa;
+    color: #2d3748;
+}
+
+.person-nav-item.active {
+    background: #ebf4ff;
+    color: #667eea;
+    font-weight: 600;
+    border-left-color: #667eea;
+}
+
+/* ════════════════════════════
+   ПРАВАЯ ЧАСТЬ — КОНТЕНТ
+════════════════════════════ */
+.person-main {
+    background: #f0f2f5;
+    padding: 24px 28px 60px;
+    min-width: 0;
+    max-width: 100%;
+}
+
+/* Ограничиваем ширину контента: 8 из 10 колонок */
+.person-content-wrap {
+    max-width: calc(8 / 10 * 100%);
+}
+
+/* ════════════════════════════
+   ПРОФИЛЬНАЯ ШАПКА (серый фон)
+════════════════════════════ */
+.person-profile-header {
+    background: #f0f2f5;
+    padding-bottom: 0;
+    margin-bottom: 20px;
+}
+
+/* Верхняя строка: аватар + имя */
+.person-profile-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 16px;
+    margin-bottom: 6px;
+}
+
+/* Левая часть шапки: иконка + имя */
+.person-profile-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex: 1;
+}
+
+.person-avatar-wrap {
+    width: 60px; height: 60px;
+    background: #e2e8f0;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+}
+
+.person-profile-info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.person-type-label {
+    font-size: 12px;
+    color: #a0aec0;
+    font-weight: 500;
+}
+
+.person-full-name {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1a202c;
+    line-height: 1.2;
+}
+
+/* Код ЕРУФР — под аватаром + именем */
+.person-code-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 12px;
+    padding-left: 76px; /* 60px аватар + 16px gap */
+}
+
+.person-code-label {
+    font-size: 13px;
+    color: #718096;
+    font-weight: 500;
+}
+
+.person-code-value {
+    font-size: 13px;
+    color: #2d3748;
+    font-weight: 600;
+}
+
+/* Горизонтальная черта */
+.person-header-divider {
+    height: 1px;
+    background: #e2e8f0;
+    margin: 0 0 14px 0;
+}
+
+/* Кнопки — ПОСЛЕ горизонтальной линии */
+.person-profile-actions {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-bottom: 20px;
+}
+
+.btn-person-action {
+    background: white;
+    color: #2d3748;
+    border: 1px solid #cbd5e0;
+    border-right: none;
+    padding: 9px 20px;
+    font-size: 13px; font-weight: 600;
+    cursor: pointer;
+    border-radius: 0;
+    transition: background 0.2s;
+    white-space: nowrap;
+    font-family: inherit;
+}
+.btn-person-action:hover { background: #f7f8fa; }
+
+/* Кнопка Выгрузить + стрелка */
+.btn-person-download-wrap {
+    display: flex;
+    align-items: stretch;
+}
+
+.btn-person-download {
+    background: white;
+    color: #2d3748;
+    border: 1px solid #cbd5e0;
+    border-right: none;
+    padding: 9px 16px;
+    font-size: 13px; font-weight: 600;
+    cursor: pointer;
+    border-radius: 0;
+    transition: background 0.2s;
+    white-space: nowrap;
+    display: flex; align-items: center; gap: 7px;
+    font-family: inherit;
+}
+.btn-person-download:hover { background: #f7f8fa; }
+
+.btn-person-download-arrow {
+    background: white;
+    color: #718096;
+    border: 1px solid #cbd5e0;
+    padding: 9px 10px;
+    cursor: pointer;
+    border-radius: 0;
+    transition: background 0.2s;
+    display: flex; align-items: center; justify-content: center;
+    font-family: inherit;
+}
+.btn-person-download-arrow:hover { background: #f7f8fa; }
+
+/* ════════════════════════════
+   КАРТОЧКИ-БЛОКИ
+════════════════════════════ */
+.person-card {
+    background: white;
+    border-radius: 4px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+
+.person-card-title {
+    font-size: 14px; font-weight: 700;
+    color: #1a202c;
+    padding-bottom: 12px;
+}
+
+.person-card-divider {
+    height: 1px;
+    background: #e2e8f0;
+    margin: 0 0 16px 0;
+}
+
+/* Пустое сообщение */
+.person-empty-msg {
+    font-size: 13px;
+    color: #a0aec0;
+    padding: 8px 0;
+}
+
+/* ════════════════════════════
+   БЛОК ОБЩИХ СВЕДЕНИЙ
+════════════════════════════ */
+/* ФИО строкой */
+.person-fio-row {
+    font-size: 16px; font-weight: 600;
+    color: #1a202c;
+    margin-bottom: 18px;
+}
+
+/* Две колонки */
+.person-card-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+.person-card-col {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Заголовок колонки */
+.person-col-title {
+    font-size: 13px; font-weight: 700;
+    color: #1a202c;
+    margin-bottom: 4px;
+}
+
+/* Строка поля: Название ....... Значение */
+.person-field-row {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    font-size: 13px;
+}
+
+.person-field-label {
+    color: #4a5568;
+    font-weight: 500;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+/* Точки-заполнитель */
+.person-field-dots {
+    flex: 1;
+    border-bottom: 1px dotted #cbd5e0;
+    margin: 0 6px;
+    min-width: 20px;
+    position: relative;
+    top: -3px;
+}
+
+.person-field-value {
+    color: #2d3748;
+    font-weight: 500;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+/* ════════════════════════════
+   ДВА БЛОКА В СТРОКУ
+════════════════════════════ */
+.person-card-row-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.person-card-row-2 .person-card {
+    margin-bottom: 0;
+}
