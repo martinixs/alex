@@ -5,8 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Иванов Иван Платонович — Физическое лицо</title>
-    <link rel="stylesheet" href="search.css">
     <link rel="stylesheet" href="person.css">
+    <link rel="stylesheet" href="search.css">
+
 </head>
 <body>
 <script>
@@ -14,18 +15,20 @@
     (function() {
         const get = key => sessionStorage.getItem(key) || '—';
         window._fl = {
-            surname : get('fl_surname'),
-            name    : get('fl_name'),
-            midname : get('fl_midname'),
-            gender  : get('fl_gender'),
-            dob     : get('fl_dob'),
-            place   : get('fl_place'),
-            inn     : get('fl_inn'),
-            snils   : get('fl_snils'),
+            erufr    : get('fl_erufr'),
+            surname  : get('fl_surname'),
+            name     : get('fl_name'),
+            midname  : get('fl_midname'),
+            gender   : get('fl_gender'),
+            dob      : get('fl_dob'),
+            place    : get('fl_place'),
+            inn      : get('fl_inn'),
+            snils    : get('fl_snils'),
+            createdAt: get('fl_createdAt'),
         };
+        /* Полное ФИО — пропускаем пустые и '—' */
         window._fl.fullName = [_fl.surname, _fl.name, _fl.midname]
             .filter(v => v && v !== '—').join(' ') || 'Новое физическое лицо';
-        window._fl.initials = (_fl.surname[0] || 'Ф') + (_fl.name[0] || 'И');
     })();
 </script>
 
@@ -65,7 +68,7 @@
 <!-- ══════════════════════════════
      ОСНОВНОЙ КОНТЕНТ
 ══════════════════════════════ -->
-<div class="person-layout">
+<div class="person-layout" style="min-height: calc(100vh - 64px);">
 
     <!-- ══ Левая колонка (2/12) — боковое меню ══ -->
     <aside class="person-sidebar">
@@ -91,7 +94,7 @@
         <!-- ── Профильная шапка на сером фоне ── -->
         <div class="person-profile-header">
 
-            <!-- Аватар + имя + код -->
+            <!-- Аватар + имя -->
             <div class="person-profile-top">
                 <div class="person-profile-left">
                     <div class="person-avatar-wrap">
@@ -105,35 +108,37 @@
                         <div class="person-full-name" id="profileFullName">Иванов Иван Платонович</div>
                     </div>
                 </div>
-                <div class="person-profile-actions">
-                    <button class="btn-person-action">Перейти в КЗ ПДР</button>
-                    <div class="btn-person-download-wrap">
-                        <button class="btn-person-download">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                                <polyline points="7 10 12 15 17 10"/>
-                                <line x1="12" y1="15" x2="12" y2="3"/>
-                            </svg>
-                            Выгрузить
-                        </button>
-                        <button class="btn-person-download-arrow" title="Выбор формата">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="6 9 12 15 18 9"/>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
             </div>
 
             <!-- Код ЕРУФР -->
             <div class="person-code-row">
                 <span class="person-code-label">Код ЕРУФР:</span>
-                <span class="person-code-value">—</span>
+                <span class="person-code-value" id="profileErufr">—</span>
             </div>
 
-            <!-- Разделитель -->
-            <div class="person-header-divider"></div>
+        </div><!-- /person-profile-header -->
 
+        <!-- Разделитель -->
+        <div class="person-header-divider"></div>
+
+        <!-- Кнопки — ПОСЛЕ разделительной линии -->
+        <div class="person-profile-actions">
+            <button class="btn-person-action">Перейти в КЗ ПДР</button>
+            <div class="btn-person-download-wrap">
+                <button class="btn-person-download">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="7 10 12 15 17 10"/>
+                        <line x1="12" y1="15" x2="12" y2="3"/>
+                    </svg>
+                    Выгрузить
+                </button>
+                <button class="btn-person-download-arrow" title="Выбор формата">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"/>
+                    </svg>
+                </button>
+            </div>
         </div>
 
         <!-- ── Блок: Общие сведения ── -->
@@ -217,6 +222,7 @@
 <script>
     /* Подставляем данные из sessionStorage в DOM */
     document.getElementById('profileFullName').textContent = _fl.fullName;
+    document.getElementById('profileErufr').textContent    = _fl.erufr;
     document.getElementById('fioRow').textContent          = _fl.fullName;
     document.getElementById('valInn').textContent          = _fl.inn;
     document.getElementById('valSnils').textContent        = _fl.snils;

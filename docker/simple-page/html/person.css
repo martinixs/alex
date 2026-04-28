@@ -7,6 +7,7 @@
     display: grid;
     grid-template-columns: 220px 1fr;
     min-height: calc(100vh - 64px);
+    overflow-x: hidden;
 }
 
 /* ════════════════════════════
@@ -20,15 +21,28 @@
     top: 64px;
     height: calc(100vh - 64px);
     overflow-y: auto;
+    align-self: stretch;
+    min-height: 100%;
+}
+
+.person-layout {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    min-height: 100vh;
+    overflow-x: hidden;
+    align-items: stretch;
 }
 
 .person-nav {
     display: flex;
     flex-direction: column;
+    align-items: stretch;
+    width: 100%;
 }
 
 .person-nav-item {
     display: block;
+    width: 100%;
     padding: 10px 16px;
     font-size: 13px; font-weight: 500;
     color: #4a5568;
@@ -36,9 +50,11 @@
     border-left: 3px solid transparent;
     transition: background 0.15s, color 0.15s, border-color 0.15s;
     line-height: 1.35;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    white-space: normal;
+    word-break: break-word;
+    box-sizing: border-box;
+    text-align: left !important;
+    justify-content: flex-start !important;
 }
 
 .person-nav-item:hover {
@@ -58,14 +74,15 @@
 ════════════════════════════ */
 .person-main {
     background: #f0f2f5;
-    padding: 24px 28px 60px;
+    padding: 24px 36px 60px;
     min-width: 0;
     max-width: 100%;
+    width: 130%;
 }
 
-/* Ограничиваем ширину контента: 8 из 10 колонок */
+/* Ограничиваем ширину контента: 100% правой зоны */
 .person-content-wrap {
-    max-width: calc(8 / 10 * 100%);
+    max-width: 100%;
 }
 
 /* ════════════════════════════
@@ -153,6 +170,7 @@
 .person-profile-actions {
     display: flex;
     align-items: center;
+    justify-content: flex-end;
     gap: 0;
     margin-bottom: 20px;
 }
