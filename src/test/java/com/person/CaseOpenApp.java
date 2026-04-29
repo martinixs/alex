@@ -20,53 +20,127 @@ public class CaseOpenApp extends BaseTest {
         wait.until(
                 ExpectedConditions.visibilityOfElementLocated(By.id("login"))
         ).sendKeys("admin");
-        Thread.sleep(TWO_SECOND); //
+
+        Thread.sleep(HALF_SECOND); //
 
         driver.findElement(By.id("password")).sendKeys("1234");
 
-        Thread.sleep(TWO_SECOND); // ← пауза 2 секунды
+        Thread.sleep(HALF_SECOND); // ← пауза 2 секунды
 
-        driver.findElement(By.id("signin")).click();
+        driver.findElement(By.className("btn-login")).click();
 
         wait.until(
                 ExpectedConditions.visibilityOfElementLocated(
-                        By.xpath("//div[@class='hero-title']"))
+                        By.xpath("//div[@class='hero-title']")));
 
-        );
-
-        Thread.sleep(TWO_SECOND); //
-        driver.findElement(By.xpath("//div[@class='app-card']/div/button[contains(@onclick, 'Приложение ЕУФР')]"))
+        Thread.sleep(HALF_SECOND); //
+        driver.findElement(By.xpath("//div[@class='app-card']/div/button[contains(@onclick, 'Приложение ЕРУФР')]"))
                 .click();
 
-        Thread.sleep(TWO_SECOND); //
-       wait.until(
+        Thread.sleep(HALF_SECOND); //
+        wait.until(
                 ExpectedConditions.visibilityOfElementLocated(
-                        By.xpath("//button[@class='btn-open-app']"))
-        );
-        Thread.sleep(TWO_SECOND);
+                        By.xpath("//button[@class='btn-open-app']")));
+        Thread.sleep(HALF_SECOND);
 
-        driver.findElement(By.xpath("//button[@class='panel-tab-btn' and contains(text(), 'Релизы')]")).click();
-        Thread.sleep(TWO_SECOND);
+        driver.findElement(By.xpath("//button[@class='panel-tab-btn' and contains(text(), 'Релизы')]"))
+                .click();
+        Thread.sleep(HALF_SECOND);
 
         driver.findElement(By.xpath("//button[contains(text(), 'О приложении')]")).click();
-        Thread.sleep(TWO_SECOND);
+        Thread.sleep(HALF_SECOND);
 
         driver.findElement(By.xpath("//button[@class='btn-open-app']")).click();
 
-        Thread.sleep(TWO_SECOND); //
+        Thread.sleep(HALF_SECOND); //
 
         wait.until(
                 ExpectedConditions.visibilityOfElementLocated(
-                        By.xpath("//div[@class='page-title']"))
-
-        );
+                        By.xpath("//div[@class='page-title']")));
 
         WebElement radio = driver.findElement(By.xpath("//input[@value='fl']"));
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].click();", radio);
 
 
-        Thread.sleep(TEN_SECOND); //
+        Thread.sleep(HALF_SECOND);
+
+        driver.findElement(By.id("addFL")).click();
+
+        wait.until(
+                ExpectedConditions.visibilityOfElementLocated(
+                        By.xpath("//div[@class='modal-fl-header']")));
+
+        driver.findElement(By.id("verify-surname")).sendKeys("Иванов");
+        Thread.sleep(HALF_SECOND);
+
+        driver.findElement(By.id("verify-name")).sendKeys("Иван");
+        Thread.sleep(HALF_SECOND);
+
+        driver.findElement(By.id("verify-midname")).sendKeys("Платонович");
+        Thread.sleep(HALF_SECOND);
+
+        driver.findElement(By.id("verify-inn")).sendKeys("569205585045");
+        Thread.sleep(HALF_SECOND);
+
+        driver.findElement(By.id("verify-snils")).sendKeys("631-137-298 65");
+        Thread.sleep(HALF_SECOND);
+
+        driver.findElement(By.xpath("//button[@class='btn-modal-verify']")).click();
+        Thread.sleep(HALF_SECOND);
+
+        wait.until(
+                ExpectedConditions.visibilityOfElementLocated(
+                        By.xpath("//div[contains(text(),'Создание нового физического лица')]")));
+
+        driver.findElement(By.xpath("//input[@value='male']")).click();
+        Thread.sleep(HALF_SECOND);
+
+        driver.findElement(By.id("fl-dob")).sendKeys("30.05.1980");
+        Thread.sleep(HALF_SECOND);
+
+
+        driver.findElement(By.id("doc-number"))
+                .sendKeys("1");
+        Thread.sleep(HALF_SECOND);
+
+        driver.findElement(By.id("doc-date"))
+                .sendKeys("04.04.2024");
+        Thread.sleep(HALF_SECOND);
+
+
+        driver.findElement(By.id("doc-start-date"))
+                .sendKeys("04.05.2024");
+        Thread.sleep(HALF_SECOND);
+
+        driver.findElement(By.xpath("//button[@class='btn-modal-save']"))
+                .click();
+
+
+        wait.until(
+                ExpectedConditions.visibilityOfElementLocated(
+                        By.xpath("//main[@class='person-main']")));
+
+        driver.findElement(By.id("search-form")).click();
+        Thread.sleep(HALF_SECOND);
+
+        WebElement radio1 = driver.findElement(By.xpath("//input[@value='fl']"));
+        JavascriptExecutor js1 = (JavascriptExecutor) driver;
+        js1.executeScript("arguments[0].click();", radio1);
+
+
+        driver.findElement(By.xpath("//input[@wfd-id='id11']")).sendKeys("Иванов");
+        Thread.sleep(HALF_SECOND);
+
+        driver.findElement(By.xpath("//input[@wfd-id='id12']")).sendKeys("Иван");
+        Thread.sleep(HALF_SECOND);
+
+        driver.findElement(By.xpath("//input[@wfd-id='id13']")).sendKeys("Платонович");
+        Thread.sleep(HALF_SECOND);
+
+        driver.findElement(By.id("findFl")).click();
+
+        Thread.sleep(TEN_SECOND);
 
     }
 }

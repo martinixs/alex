@@ -54,7 +54,7 @@
       <div class="page-subtitle">Управление физическими и юридическими лицами</div>
     </div>
     <div class="top-bar-right">
-      <button class="btn-top" onclick="openModalFL()">
+      <button class="btn-top" onclick="openModalFL()" id="addFL">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
           <line x1="12" y1="5" x2="12" y2="19"/>
           <line x1="5" y1="12" x2="19" y2="12"/>
@@ -220,7 +220,7 @@
             </div>
           </div>
           <div class="form-bottom-actions">
-            <button class="btn-action btn-find" onclick="handleSearch()">Найти</button>
+            <button class="btn-action btn-find" onclick="handleSearch()" id="findFl">Найти</button>
             <button class="btn-action btn-clear" onclick="handleClear()">Очистить</button>
           </div>
         </div>
@@ -410,11 +410,11 @@
                   <div class="card-row-2">
                     <div class="form-group">
                       <label class="field-label">Номер <span class="field-required">*</span></label>
-                      <input class="form-input" type="text" placeholder="Введите номер...">
+                      <input class="form-input" id="doc-number" type="text" placeholder="Введите номер...">
                     </div>
                     <div class="form-group">
                       <label class="field-label">Дата <span class="field-required">*</span></label>
-                      <input class="form-input" type="date">
+                      <input class="form-input" id="doc-date" type="date">
                     </div>
                   </div>
                 </div>
@@ -485,7 +485,7 @@
                 <div class="fl-card-body">
                   <div class="form-group">
                     <label class="field-label">Дата вступления в силу <span class="field-required">*</span></label>
-                    <input class="form-input" type="date">
+                    <input class="form-input" type="date" id="doc-start-date">
                   </div>
                 </div>
               </div>

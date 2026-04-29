@@ -4,215 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Вход — Портал бизнес-пользователей</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #0f1117;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* ── Обёртка страницы ── */
-        .page-wrapper {
-            display: flex;
-            width: 100%;
-            max-width: 1100px;
-            min-height: 100vh;
-            align-items: center;
-            justify-content: space-between;
-            padding: 40px 60px;
-            gap: 40px;
-        }
-
-        /* ── Левая часть — название организации ── */
-        .left-side {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            color: white;
-            padding-right: 60px;
-        }
-
-        .org-name {
-            font-size: 42px;
-            font-weight: 700;
-            line-height: 1.2;
-            letter-spacing: -0.5px;
-            background: linear-gradient(135deg, #ffffff 0%, #a0aec0 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 28px;
-        }
-
-        .divider {
-            width: 100%;
-            height: 1px;
-            background: linear-gradient(90deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 100%);
-            margin-bottom: 28px;
-        }
-
-        .portal-name {
-            font-size: 16px;
-            color: #718096;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            font-weight: 400;
-        }
-
-        /* ── Правая часть — форма входа ── */
-        .right-side {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .login-card {
-            background: #ffffff;
-            border: 1px solid rgba(255,255,255,0.08);
-            padding: 48px 40px;
-            width: 380px;
-        }
-
-        .login-title {
-            font-size: 26px;
-            font-weight: 600;
-            color: #000000;
-            margin-bottom: 8px;
-        }
-
-        .login-subtitle {
-            font-size: 14px;
-            color: #4a5568;
-            margin-bottom: 36px;
-        }
-
-        /* ── Поля ввода ── */
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 13px;
-            font-weight: 500;
-            color: #a0aec0;
-            margin-bottom: 8px;
-            letter-spacing: 0.3px;
-        }
-
-        .form-group input {
-            width: 100%;
-            background: #E0E0E0;
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 10px;
-            padding: 13px 16px;
-            font-size: 15px;
-            color: #ffffff;
-            outline: none;
-            transition: border-color 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .form-group input::placeholder {
-            color: #000000;
-        }
-
-        .form-group input:focus {
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
-        }
-
-        /* ── Ссылка забыли пароль ── */
-        .forgot-link {
-            display: block;
-            text-align: right;
-            font-size: 13px;
-            color: #667eea;
-            text-decoration: none;
-            margin-top: -12px;
-            margin-bottom: 28px;
-            opacity: 0.8;
-            transition: opacity 0.2s;
-        }
-
-        .forgot-link:hover {
-            opacity: 1;
-        }
-
-        /* ── Кнопка входа ── */
-        .btn-login {
-            width: 100%;
-            padding: 14px;
-            background: #1E90FF;
-            border: none;
-            border-radius: 2px;
-            color: white;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            letter-spacing: 0.3px;
-            transition: opacity 0.2s ease, transform 0.1s ease;
-        }
-
-        .btn-login:hover {
-            opacity: 0.9;
-            transform: translateY(-1px);
-        }
-
-        .btn-login:active {
-            transform: translateY(0px);
-            opacity: 1;
-        }
-
-        /* ── Нижняя подпись ── */
-        .login-footer {
-            margin-top: 28px;
-            text-align: center;
-            font-size: 12px;
-            color: #2d3748;
-        }
-
-        /* ── Адаптив ── */
-        @media (max-width: 768px) {
-            .page-wrapper {
-                flex-direction: column;
-                padding: 40px 24px;
-                justify-content: center;
-            }
-
-            .left-side {
-                padding-right: 0;
-                text-align: center;
-                align-items: center;
-            }
-
-            .org-name {
-                font-size: 28px;
-            }
-
-            .divider {
-                background: linear-gradient(90deg,
-                    rgba(255,255,255,0) 0%,
-                    rgba(255,255,255,0.3) 50%,
-                    rgba(255,255,255,0) 100%);
-            }
-
-            .login-card {
-                width: 100%;
-                max-width: 380px;
-            }
-        }
-    </style>
+    <title>Вход — ЕРУФР</title>
+    <link rel="stylesheet" href="index.css">
 </head>
 <body>
 
@@ -220,69 +13,79 @@
 
     <!-- Левая часть -->
     <div class="left-side">
-        <div class="org-name">Название<br>Организации</div>
+        <div class="brand">
+            <div class="logo-box"></div>
+            <span class="logo-text">ЕРУФР</span>
+        </div>
+        <div class="org-name">Единый реестр<br>участников<br>финансового рынка</div>
         <div class="divider"></div>
         <div class="portal-name">Портал бизнес-пользователей</div>
+        <div class="portal-desc">Централизованная система управления данными участников финансового рынка</div>
     </div>
 
     <!-- Правая часть — карточка входа -->
     <div class="right-side">
         <div class="login-card">
 
-            <div class="login-title">Вход</div>
+            <div class="login-card-accent"></div>
 
-            <form onsubmit="handleLogin(event)">
+            <div class="login-card-body">
+                <div class="login-title">Вход в систему</div>
+                <div class="login-subtitle">Введите учётные данные для доступа</div>
 
-                <div class="form-group">
-                    <label for="login">Логин</label>
-                    <input
-                            type="text"
-                            id="login"
-                            placeholder="Введите логин"
-                            autocomplete="username"
-                    />
+                <form onsubmit="handleLogin(event)">
+
+                    <div class="form-group">
+                        <label for="login">Логин</label>
+                        <div class="input-wrap">
+                            <svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                <circle cx="12" cy="7" r="4"/>
+                            </svg>
+                            <input type="text" id="login" placeholder="Введите логин" autocomplete="username"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Пароль</label>
+                        <div class="input-wrap">
+                            <svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                            </svg>
+                            <input type="password" id="password" placeholder="Введите пароль" autocomplete="current-password"/>
+                        </div>
+                    </div>
+
+                    <div class="form-bottom-row">
+                        <label class="remember-label">
+                            <input type="checkbox" class="remember-check"/>
+                            <span>Запомнить меня</span>
+                        </label>
+                        <a href="#" class="forgot-link">Забыли пароль?</a>
+                    </div>
+
+                    <button type="submit" class="btn-login">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+                            <polyline points="10 17 15 12 10 7"/>
+                            <line x1="15" y1="12" x2="3" y2="12"/>
+                        </svg>
+                        Войти
+                    </button>
+
+                </form>
+
+                <div class="login-footer">
+                    © 2025 ЕРУФР. Все права защищены.
                 </div>
-
-                <div class="form-group">
-                    <label for="password">Пароль</label>
-                    <input
-                            type="password"
-                            id="password"
-                            placeholder="Введите пароль"
-                            autocomplete="current-password"
-                    />
-                </div>
-
-                <a href="#" class="forgot-link">Забыли пароль?</a>
-
-                <button type="submit" class="btn-login" id="signin">
-                    Войти
-                </button>
-
-            </form>
+            </div>
 
         </div>
     </div>
 
 </div>
 
-<script>
-    function handleLogin(e) {
-        e.preventDefault();
-        const login = document.getElementById('login').value;
-        const password = document.getElementById('password').value;
-
-        if (!login || !password) {
-            alert('Заполните все поля');
-            return;
-        }
-
-        // Здесь логика авторизации
-        console.log('Вход:', { login, password });
-        window.location.href = "http://localhost:8080/main.html";
-
-    }
-</script>
-
+<script src="index.js"></script>
 </body>
 </html>
