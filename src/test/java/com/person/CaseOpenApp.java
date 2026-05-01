@@ -122,12 +122,12 @@ public class CaseOpenApp extends BaseTest {
                         By.xpath("//main[@class='person-main']")));
 
         driver.findElement(By.id("search-form")).click();
-        Thread.sleep(ONE_AND_HALF);
+        Thread.sleep(FIVE_SECOND);
 
         WebElement radio1 = driver.findElement(By.xpath("//input[@value='fl']"));
         JavascriptExecutor js1 = (JavascriptExecutor) driver;
         js1.executeScript("arguments[0].click();", radio1);
-        Thread.sleep(FIVE_SECOND);
+        Thread.sleep(THREE_SECOND);
 
         driver.findElement(By.id("search_surname")).sendKeys("Иванов");
         Thread.sleep(ONE_AND_HALF);
